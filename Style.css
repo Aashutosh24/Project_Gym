@@ -1,0 +1,58 @@
+body{
+    color: khaki;
+    margin: 0px;
+    padding: 0px;
+    background: url('Img/pexels-estudiopolaroid-3112004.jpg') ;
+    font-family: "Recursive", sans-serif;
+    background-size: cover;
+}
+.left {
+    /* border: 3px solid cyan; */
+    display: inline-block;
+    position: absolute;
+    left: 20px;
+    top: 15px;
+}
+.left img {
+    width: 50px;
+    /* filter: drop-shadow(70%); */
+    border-radius: 25px;
+}
+.centre {
+    /* border: 3px solid rgb(122, 67, 22); */
+    display: block;
+    width: 45%;
+    margin: 23px 500px;
+}
+.right {
+    /* border: 3px solid rgb(46, 169, 89); */
+    display: inline-block;
+    position: absolute;
+    width: 95px;
+    right: 26px;
+    top: 15px;
+}
+#navbar li {
+    display: inline-block;
+}
+#navbar li a {
+    text-decoration: none;
+    color: white;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-size: 24px;
+    padding: 29px;
+}
+#navbar li a:hover {
+    color: rgba(2, 103, 255, 0.826);
+    text-decoration: solid;
+}
+.right img {
+    width: 28px;
+    height: 35px;
+}
+.map {
+    float: left;
+}
+.call {
+    float: right;
+}
