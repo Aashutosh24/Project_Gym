@@ -4,7 +4,8 @@ body{
     padding: 0px;
     background: url('Img/pexels-estudiopolaroid-3112004.jpg') ;
     font-family: "Recursive", sans-serif;
-    background-size: cover;
+    background-size: 1537px;
+    background-repeat: no-repeat;
 }
 .left {
     /* border: 3px solid cyan; */
@@ -21,8 +22,8 @@ body{
 .centre {
     /* border: 3px solid rgb(122, 67, 22); */
     display: block;
-    width: 45%;
-    margin: 23px 500px;
+    width: 50%;
+    margin: 23px 490px;
 }
 .right {
     /* border: 3px solid rgb(46, 169, 89); */
@@ -55,4 +56,25 @@ body{
 }
 .call {
     float: right;
+}
+#Home{
+    position: absolute;
+    Top: 900px;
+    /* border: 2px solid white; */
+    background-color: blueviolet;
+    width: 1000px;
+    padding: 50px;
+    left: 220px;
+    border-radius: 16px;
+}
+#Intro{
+    position: absolute;
+    top: 220px;
+    left: 60px;
+    font-weight: bolder;
+    font-size: 70px;
+    width: 490px;
+    color: rgb(160, 220, 160);
+    text-shadow: 45%;
+    font-family: cursive;
 }
