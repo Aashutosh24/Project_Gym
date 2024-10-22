@@ -62,7 +62,7 @@ html{
     content: '';
     background: url('Img/pexels-estudiopolaroid-3112004.jpg') no-repeat center center;
     z-index: -1;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     position: absolute;
     background-repeat: no-repeat;
@@ -74,12 +74,12 @@ html{
 } */
 #Home{
     position: absolute;
-    Top: 900px; 
+    Top: 55em;
     /* border: 2px solid white; */
     background-color: blueviolet;
-    width: 1000px;
-    padding: 50px;
-    left: 220px;
+    width: 69vw;
+    padding: 45px;
+    left: 18em;
     border-radius: 16px;
 }
 #intro{
@@ -94,3 +94,9 @@ html{
     font-family: cursive;
     text-shadow: 4px 4px white;
 } 
+#about h1{
+    color: darkblue;
+    position: relative;
+    top: 68rem;
+    left: 33rem;
+}
