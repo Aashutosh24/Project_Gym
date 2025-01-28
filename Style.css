@@ -78,9 +78,9 @@ html{
     Top: 55em;
     /* border: 2px solid white; */
     background-color: blueviolet;
-    width: 69vw;
-    padding: 45px;
-    left: 18em;
+    /* width: 69vw;
+    padding: 45px; */
+    /* left: 18em; */
     border-radius: 16px;
 }
 #intro{
@@ -89,7 +89,7 @@ html{
     left: 60px;
     font-weight: bolder;
     font-size: 70px;
-    width: 490px;
+    /* width: 490px; */
     color: rgb(160, 220, 160);
     text-shadow: 45%;
     font-family: cursive;
