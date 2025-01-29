@@ -1,5 +1,5 @@
 body{
-    color: khaki;
+    background-color: rgb(224, 220, 182);
     margin: 0px;
     padding: 0px;
     font-family: "Recursive", sans-serif;
@@ -61,10 +61,11 @@ html{
 #home::before{
     content: "";
     position: absolute;
-    background: url('Img/pexels-estudiopolaroid-3112004.jpg') no-repeat center center;
+    background: url('Img/barbell-1839086_640.jpg') no-repeat center center;
     z-index: -1;
     width: 100%;
     height: 100%;
+    opacity: 0.9;
     position: absolute;
     background-repeat: no-repeat;
     background-size: cover;
@@ -77,10 +78,13 @@ html{
     position: absolute;
     Top: 55em;
     /* border: 2px solid white; */
-    background-color: blueviolet;
-    /* width: 69vw;
-    padding: 45px; */
+    background-color: rgb(190, 126, 249);
+    width: 69vw;
+    padding: 45px;
     /* left: 18em; */
+    left: 0; /* Added to remove left white space */
+    right: 0; /* Added to ensure it stretches to the right */
+    margin: auto;
     border-radius: 16px;
 }
 #intro{
@@ -89,15 +93,24 @@ html{
     left: 60px;
     font-weight: bolder;
     font-size: 70px;
-    /* width: 490px; */
-    color: rgb(160, 220, 160);
+    color: rgb(255, 255, 255);
     text-shadow: 45%;
-    font-family: cursive;
-    text-shadow: 4px 4px white;
+    /* font-family: cursive; */
+    /* text-shadow: 2px 2px rgba(255, 248, 41, 0.842); */
 } 
+#intro p{
+    color: darkred;
+    margin: 0px;
+}
+#intro button{
+    cursor: pointer;
+    background-color: darkred;
+    margin-left: 80px;
+    padding: auto;
+}
 #about h1{
     color: darkblue;
     position: relative;
     top: 68rem;
-    left: 33rem;
+    left: 0rem;
 }
