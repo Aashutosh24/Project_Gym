@@ -24,7 +24,7 @@ html{
     /* border: 3px solid rgb(122, 67, 22); */
     display: block;
     width: 50%;
-    margin: 23px 490px;
+    margin: 23px 430px;
 }
 .right {
     /* border: 3px solid rgb(46, 169, 89); */
@@ -61,10 +61,10 @@ html{
 #home::before{
     content: "";
     position: absolute;
-    background: url('Img/barbell-1839086_640.jpg') no-repeat center center;
+    background: url('Img/barbell-hd.jpg') no-repeat center center;
     z-index: -1;
     width: 100%;
-    height: 100%;
+    height: 130%;
     opacity: 0.9;
     position: absolute;
     background-repeat: no-repeat;
@@ -106,7 +106,7 @@ html{
     cursor: pointer;
     background-color: darkred;
     margin-left: 80px;
-    padding: auto;
+    padding: 5px;
 }
 #about h1{
     color: darkblue;
