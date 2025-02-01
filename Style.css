@@ -23,8 +23,9 @@ html{
 .centre {
     /* border: 3px solid rgb(122, 67, 22); */
     display: block;
-    width: 87%;
-    margin: 23px 350px;
+    /* width: 70%; */
+    margin: 23px;
+    margin-left: 320px;
 }
 /* .right {
     /* border: 3px solid rgb(46, 169, 89); 
@@ -34,12 +35,21 @@ html{
     right: 26px;
     top: 23px;
 } */
-#login{
+#sign{
+    background: #000;
     font-size: 15px;
     text-decoration: none;
-    margin-left: 226px;
-    float: right;
+    float: left; /* Changed to float left */
+    margin-right: 10px; /* Adjusted margin to create space between sign and login */
 }
+#login{
+    background: #000;
+    font-size: 15px;
+    text-decoration: none;
+    float: right; /* Kept float right */
+    margin-left: 10px; /* Adjusted margin to create space between sign and login */
+}
+
 #navbar li {
     display: inline-block;
 }
