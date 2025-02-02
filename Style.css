@@ -35,19 +35,19 @@ html{
     right: 26px;
     top: 23px;
 } */
-#sign{
-    background: #000;
-    font-size: 15px;
-    text-decoration: none;
-    float: left; /* Changed to float left */
-    margin-right: 10px; /* Adjusted margin to create space between sign and login */
-}
 #login{
     background: #000;
     font-size: 15px;
     text-decoration: none;
-    float: right; /* Kept float right */
-    margin-left: 10px; /* Adjusted margin to create space between sign and login */
+    /* float: right; Kept float right */
+    margin-left: 233px; /* Adjusted margin to create space between sign and login */
+}
+#sign{
+    background: #000;
+    font-size: 15px;
+    text-decoration: none;
+    float: right; /* Changed to float left */
+    margin-right: 10px; /* Adjusted margin to create space between sign and login */
 }
 
 #navbar li {
