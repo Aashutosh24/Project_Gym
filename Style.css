@@ -127,7 +127,9 @@ html{
 }
 #about h1{
     color: darkblue;
-    position: relative;
-    top: 68rem;
-    left: 0rem;
+    /* position: absolute; */
+    /* top: 68rem;
+    left: 0rem; */
+    padding: auto;
+    display: inline;
 }
