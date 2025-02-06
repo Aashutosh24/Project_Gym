@@ -36,18 +36,17 @@ html{
     top: 23px;
 } */
 #login{
-    border: 2px solid maroon;  
+    border: 2px solid rgba(67, 52, 52, 0.789);  
     font-size: 15px;
     text-decoration: none;
-    /* float: right; Kept float right */
-    margin-left: 233px; /* Adjusted margin to create space between sign and login */
+    margin-left: 233px; 
 }
 #sign{
     border: 2px solid maroon;
     font-size: 15px;
     text-decoration: none;
-    float: right; /* Changed to float left */
-    margin-right: 10px; /* Adjusted margin to create space between sign and login */
+    float: right; 
+    margin-right: 10px; 
 }
 #navbar li {
     display: inline-block;
@@ -63,6 +62,11 @@ html{
     color: rgba(2, 103, 255, 0.826);
     text-decoration: solid;
 }
+#navbar #sign a:hover, #navbar #login a:hover {
+    color: red;
+    text-decoration: solid;
+}
+
 .right img {
     width: 28px;
     height: 35px;
