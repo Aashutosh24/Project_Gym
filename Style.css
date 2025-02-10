@@ -99,7 +99,7 @@ html{
     /* border: 2px solid white; */
     background-color: rgb(190, 126, 249);
     width: 69vw;
-    padding: 45px;
+    padding: 40px;
     /* left: 18em; */
     left: 0; /* Added to remove left white space */
     right: 0; /* Added to ensure it stretches to the right */
@@ -113,6 +113,18 @@ html{
     font-weight: bolder;
     font-size: 70px;
     color: rgb(255, 255, 255);
+    text-shadow: 45%;
+    /* font-family: cursive; */
+    /* text-shadow: 2px 2px rgba(255, 248, 41, 0.842); */
+} 
+#moti{
+    position: absolute;
+    top: 220px;
+    right: 60px;
+    font-weight: strong;
+    width: 30%;
+    font-size: 40px;
+    color: rgb(34, 239, 116);
     text-shadow: 45%;
     /* font-family: cursive; */
     /* text-shadow: 2px 2px rgba(255, 248, 41, 0.842); */
@@ -146,9 +158,9 @@ html{
 }
 #about{
     position: absolute;
-    top: 72rem;
-    display: flex;
-    flex-wrap: wrap;
+    top: 79rem;
+    /* display: flex;
+    flex-wrap: wrap; */
 }
 #about img{
     display: block;
@@ -156,8 +168,11 @@ html{
     margin-left: 50px;
     top: 5px;
     width: 40%;
-    height: 5%;
+    height: 45%;
 }
 .facil{
+    display: flex;
+    flex-wrap: wrap;
     border: 3px solid lightsalmon;
+    width: 100%;
 }
