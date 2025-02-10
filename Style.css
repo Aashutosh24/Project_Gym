@@ -42,7 +42,7 @@ html{
     margin-left: 233px; 
 }
 #sign{
-    border: 2px solid maroon;
+    border: 2px solid rgba(67, 52, 52, 0.789);
     font-size: 15px;
     text-decoration: none;
     float: right; 
@@ -131,7 +131,33 @@ html{
 #about h1{
     color: darkblue;
     position: absolute;
-    top: 68rem;
+    top: -5rem;
     left: 50%;
+    margin: 15px;
     display: inline;
+}
+#about h3{
+    color: darkblue;
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    margin: 10px;
+    display: inline;
+}
+#about{
+    position: absolute;
+    top: 72rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+#about img{
+    display: block;
+    margin: 10px;
+    margin-left: 50px;
+    top: 5px;
+    width: 40%;
+    height: 5%;
+}
+.facil{
+    border: 3px solid lightsalmon;
 }
