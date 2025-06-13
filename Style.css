@@ -129,6 +129,14 @@ html{
     /* font-family: cursive; */
     /* text-shadow: 2px 2px rgba(255, 248, 41, 0.842); */
 } 
+#moti button{
+    position: relative;
+    top: 2.5rem;
+    font-size: 2rem;
+    background-color: white;
+    color: #00ccff;
+    border-radius: 12px;
+}
 #intro p{
     color: darkred;
     margin: 0px;
@@ -159,6 +167,7 @@ html{
 #about{
     position: absolute;
     top: 79rem;
+    width: 100%;
     /* display: flex;
     flex-wrap: wrap; */
 }
@@ -168,11 +177,31 @@ html{
     margin-left: 50px;
     top: 5px;
     width: 40%;
-    height: 45%;
+    height: 65%;
+}
+.equi{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 270px;
+    width: 50%;
+    top: 45px;
+    position: relative;
+
 }
 .facil{
     display: flex;
+    margin: 25px;
     flex-wrap: wrap;
-    border: 3px solid lightsalmon;
-    width: 100%;
+    border: 3px solid rgb(224, 220, 182);
+    width: 90%;
+}
+.equi p{
+    position: relative;
+    top: 200px;
+    left: 10px;
+    width: 240px;
+    margin:  30px;
+    font-size: 15px;
+    color: rgb(0, 0, 0);
 }

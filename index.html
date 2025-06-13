@@ -33,7 +33,10 @@
    <section id="home">
     <div id="intro">Welcome to <p>Fitness Club</p>
     <button type="button">Click to know more</button></div>
-    <div id="moti">Take the first step towards a healthier, stronger you. Join us today!</div>
+    <div id="moti">Take the first step towards a healthier, stronger you. Join us today!
+
+        <button class="tomember"> See Plan </button>
+    </div>
     <span id="Home">Your Fitness, Your Way
         Push your limits and achieve your fitness goals at PowerFit Gym. Whether you're into strength training, cardio, or group workouts, we provide top-notch equipment and expert guidance to keep you motivated. Join a community that supports and inspires you every step of the way.
         <p>
@@ -49,8 +52,26 @@
         <h1>About Us</h1>
         <div class="facil">
         <h3>Our Facilities</h3>
-        <img src="Img\gym-5977600_640.jpg" alt="gym Facilities">
-        <img src="Img\gym-91849_640.jpg" alt="gym Facilities">
-    </div></div>
+        <div class= "equi">
+            <img src="Img\gym-5977600_640.jpg" alt="gym Facilities">
+        
+            <h3> The Best equipment u need</h3> 
+            <p> Our Gym contains all the equipment you require to perform your workouts to get in your desire shape. </p>
+        </div>
+        <div class="equi">
+            <img src="Img\gym-91849_640.jpg" alt="gym Facilities">
+            <h3> The Best equipment u need</h3> 
+        </div>
+    </div>
+</div>
 </body>
+<script>
+    document.querySelector(".tomember").addEventListener("click", function () {
+        const section = document.getElementById("membership");
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+    });
+</script>
+
 </html>
