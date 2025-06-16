@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,45 +10,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@300..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Style.css">
 </head>
+
 <body>
     <header class="header">
         <nav id="navbar">
-        <div class="left">
-            <img src="Img/Logo bodybuilder.jpg" alt="our logo">
-        </div>
-        <div class="centre">
-            <li> <a href="#Home">Home</a></li>
-            <li><a href="#about">About us</a></li>
-            <li><a href="#">Membership</a></li>
-            <li><a href="#">Contact us</a></li>
-            <li id="login"><a href="#login">Log in</a><li>
-            <li id="sign"><a href="#sign">Sign up</a></li>
-        </div>
-        <!-- <div class="right">
+            <div class="left">
+                <img src="Img/Logo bodybuilder.jpg" alt="our logo">
+            </div>
+            <div class="centre">
+                <li> <a href="#home">Home</a></li>
+                <li><a href="#about">About us</a></li>
+                <li><a href="#membership">Membership</a></li>
+                <li><a href="#contact">Contact us</a></li>
+                <li id="login"><a href="#login">Log in</a></li>
+                <li id="sign"><a href="#sign">Sign up</a></li>
+            </div>
+            <!-- <div class="right">
             <!-- <button class="map"><a href="maps"><img src="Img/maps.png" alt=""></a> </button>
             <button class="call"><a href="call"><img src="Img/noun-call-us-1043108.png" alt=""></a></button> 
             
         </div> -->
-    </nav>
+        </nav>
     </header>
-   <section id="home">
-    <div id="intro">Welcome to <p>Fitness Club</p>
-    <button type="button">Click to know more</button></div>
-    <div id="moti">Take the first step towards a healthier, stronger you. Join us today!
+    <section id="home">
+        <div id="intro">Welcome to <p>Fitness Club</p>
+            <button type="button" onclick="location.href='#about'">Click to know more</button>
+        </div>
+        <div id="moti">Take the first step towards a healthier, stronger you. Join us today!
 
-        <button class="tomember"> See Plan </button>
-    </div>
-    <span id="Home">Your Fitness, Your Way
-        Push your limits and achieve your fitness goals at PowerFit Gym. Whether you're into strength training, cardio, or group workouts, we provide top-notch equipment and expert guidance to keep you motivated. Join a community that supports and inspires you every step of the way.
-        <p>
-        🔥 Modern Equipment</p>
-        <p>👟 Group Classes</p>
-        <p>💪 Certified Trainers</p>
-        <p>🏋️ Flexible Memberships</p>
-
-    </span> 
-   </section>
-    <div id="about">
+            <button class="tomember"> See Plan </button>
+        </div>
+        <div id="Home">Your Fitness, Your Way
+            Push your limits and achieve your fitness goals at PowerFit Gym. Whether you're into strength training,
+            cardio, or group workouts, we provide top-notch equipment and expert guidance to keep you motivated. Join a
+            community that supports and inspires you every step of the way.
+            <p>
+                🔥 Modern Equipment</p>
+            <p>👟 Group Classes</p>
+            <p>💪 Certified Trainers</p>
+            <p>🏋️ Flexible Memberships</p>
+        </div>
+    </section>
+    <!-- <div id="about">
 
         <h1>About Us</h1>
         <div class="facil">
@@ -62,16 +66,108 @@
             <img src="Img\gym-91849_640.jpg" alt="gym Facilities">
             <h3> The Best equipment u need</h3> 
         </div>
+    </div> -->
+    <div id="about">
+        <h1>About Us</h1>
+        <div class="facil">
+            <h3>Our Facilities</h3>
+
+            <div class="equi-card">
+                <img src="Img/gym-5977600_640.jpg" alt="gym Facilities">
+                <div class="equi-content">
+                    <h4>The Best Equipment You Need</h4>
+                    <p>Our Gym contains all the equipment you require to perform your workouts to get in your desired
+                        shape.</p>
+                </div>
+            </div>
+
+            <div class="equi-card">
+                <img src="Img/gym-91849_640.jpg" alt="gym Facilities">
+                <div class="equi-content">
+                    <h4>Spacious Workout Environment</h4>
+                    <p>We ensure that your workout environment is spacious, hygienic, and motivating every single day.
+                    </p>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
+    <div id="membership" class="membership">
+        <div class="rates-section">
+            <h2>Membership Plans</h2>
+            <div class="rate-cards">
+                <div class="rate-card">
+                    <h3>Basic</h3>
+                    <p>₹999 / month</p>
+                    <ul>
+                        <li>Gym Access</li>
+                        <li>Locker Facility</li>
+                        <li>1 Trainer Session</li>
+                    </ul>
+                </div>
+                <div class="rate-card">
+                    <h3>Standard</h3>
+                    <p>₹1499 / month</p>
+                    <ul>
+                        <li>All Basic Features</li>
+                        <li>5 Trainer Sessions</li>
+                        <li>Diet Plan</li>
+                    </ul>
+                </div>
+                <div class="rate-card">
+                    <h3>Premium</h3>
+                    <p>₹1999 / month</p>
+                    <ul>
+                        <li>Unlimited Trainer Access</li>
+                        <li>Personalized Diet</li>
+                        <li>Spa + Sauna Access</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ai-note">
+            <p>💡 <strong>Exercise Helper (AI)</strong> is included in all plans to assist you with personalized workouts and smart tracking!</p>
+          </div>
+    </div> <!-- end of membership section -->
+    <section id = "contact">
+        <h3>Contact</h3>
+        <div id="details">
+            <p>Address: 43, 4th Street, M.K. Nagar, Koramangala. </p>
+            <p> +011 43299846843 , +91 7890887654</p>
+        </div>
+        <div id="contac">
+            <form id="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your Name"><br>
+              
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter mail"><br>
+              
+                <label for="phoneno">Phone No:</label>
+                <input type="tel" id="phoneno" name="phoneno" required placeholder="Enter PhoneNo"><br>
+              
+                <label for="query">Message:</label><br>
+                <textarea id="query" name="query" rows="4" required placeholder="Enter the message"></textarea><br>
+              
+                <input type="submit" value="Submit">
+              </form>
+        </div>
+
+        
+    </section>
+    <footer> Copywrite &copy; www.Foodin30.com &nbsp; All Rights are Resvered!</footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector(".tomember").addEventListener("click", function () {
+                const section = document.getElementById("membership");
+                if (section) {
+                    section.scrollIntoView({ behavior: "smooth" });
+                }
+            });
+        });
+    </script>
 </body>
-<script>
-    document.querySelector(".tomember").addEventListener("click", function () {
-        const section = document.getElementById("membership");
-        if (section) {
-            section.scrollIntoView({ behavior: "smooth" });
-        }
-    });
-</script>
+
 
 </html>
