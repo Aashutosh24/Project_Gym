@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-const apiKey = "AIzaSyCGhNNQd5HJoO8UAdOdCWbYqpw6YVXUISg"; 
+const apiKey = process.env.GEMINI_API_KEY; 
 // Toggle modal
 document.getElementById("aiBtn").onclick = () => {
 const modal = document.getElementById("aiModal");
