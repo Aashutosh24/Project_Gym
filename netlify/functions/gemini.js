@@ -1,31 +1,33 @@
-async function askGemini() {
-    const height = document.getElementById("height").value;
-    const weight = document.getElementById("weight").value;
-    const goal = document.getElementById("goal").value;
-  
-    if (!height || !weight || !goal) {
-      alert("Please fill all fields");
-      return;
+// netlify/functions/gemini.js
+
+export async function handler(event, context) {
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+  const { prompt } = JSON.parse(event.body);
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text: prompt }]
+          }
+        ]
+      })
     }
-  
-    const prompt = `I am ${height} cm tall and weigh ${weight} kg. My goal is to ${goal}. Suggest a workout and diet plan.`;
-  
-    const responseBox = document.getElementById("response");
-    responseBox.innerText = "Thinking...";
-  
-    try {
-      const result = await fetch("/.netlify/functions/gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt })
-      });
-  
-      const data = await result.json();
-      const reply = data?.reply || "No response. Try again.";
-      responseBox.innerText = reply;
-    } catch (error) {
-      responseBox.innerText = "Error contacting AI.";
-      console.error("AI Error:", error);
-    }
-  }
-  
+  );
+
+  const data = await response.json();
+
+  const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response. Try again.";
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ reply })
+  };
+}
