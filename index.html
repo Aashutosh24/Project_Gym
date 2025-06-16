@@ -155,18 +155,36 @@
 
         
     </section>
-    <footer> Copywrite &copy; www.Foodin30.com &nbsp; All Rights are Resvered!</footer>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelector(".tomember").addEventListener("click", function () {
-                const section = document.getElementById("membership");
-                if (section) {
-                    section.scrollIntoView({ behavior: "smooth" });
-                }
-            });
-        });
-    </script>
+    <!-- Sticky AI button -->
+<img id="aiBtn" src="Img/AI.jpg" alt="AI Helper">
+
+<!-- Modal popup -->
+<div id="aiModal" style="display: none; position: fixed; bottom: 100px; left: 20px; background: white; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.3); padding: 20px; width: 300px; z-index: 1001;">
+  <h3>AI Fitness Assistant</h3>
+  <input type="number" id="height" placeholder="Height (cm)" style="width: 100%; margin-bottom: 8px;">
+  <input type="number" id="weight" placeholder="Weight (kg)" style="width: 100%; margin-bottom: 8px;">
+  <select id="goal" style="width: 100%; margin-bottom: 8px;">
+    <option value="">Choose goal</option>
+    <option value="gain muscle">Gain Muscle</option>
+    <option value="lose weight">Lose Weight</option>
+    <option value="maintain weight">Maintain Weight</option>
+  </select>
+  <button onclick="askGemini()" style="width: 100%; background-color: #00ccff; color: white; border: none; padding: 8px;">Ask AI</button>
+  <div id="response" style="
+  margin-top: 10px;
+  font-size: 14px;
+  max-height: 200px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+"></div>
+
+</div>
+
+
+
+    <footer> Copywrite &copy; www.Foodin30.com &nbsp; All Rights are Resvered!</footer>
+    <script src="index.js"></script>
 </body>
 
 
