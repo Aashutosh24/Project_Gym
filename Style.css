@@ -95,11 +95,12 @@ html{
 } */
 #Home{
     position: absolute;
-    Top: 55em;
+    Top: 51em;
     /* border: 2px solid white; */
-    background-color: rgb(190, 126, 249);
+    background-color: #73deb0;
     width: 69vw;
     padding: 40px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0pX inset;
     /* left: 18em; */
     left: 0; /* Added to remove left white space */
     right: 0; /* Added to ensure it stretches to the right */
@@ -176,11 +177,10 @@ html{
 }
 #about img{
     display: block;
-    margin: 10px;
-    margin-left: 50px;
     top: 5px;
     width: 70%;
     height: 70%;
+    margin: auto;
 }
 .equi{
     display: flex;
@@ -192,18 +192,10 @@ html{
     position: relative;
 
 }
-.facil{
-    display: flex;
-    margin: 25px;
-    flex-wrap: wrap;
-    border: 3px solid rgb(224, 220, 182);
-    width: 90%;
-}
 .equi p{
     position: relative;
     top: 200px;
     left: 10px;
-    width: 240px;
     margin:  30px;
     font-size: 15px;
     color: rgb(0, 0, 0);
@@ -219,10 +211,12 @@ html{
   
   .facil {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-wrap: wrap;
-    gap: 20px;
     margin-top: 30px;
+    border: 3px solid rgb(224, 220, 182);
+    width: 90%;
+
   }
   
   .equi-card {
@@ -255,7 +249,32 @@ html{
     font-size: 14px;
     color: #333;
   }
-  
+  .slider-container {
+    scroll-behavior: smooth;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px;
+}
+
+.facil {
+    display: inline-flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    width: max-content;
+    border: none; /* optional */
+}
+
+/* .equi-card {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 300px;
+    background-color: #03A6A1;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+} */
+
 
   .rates-section {
     /* background-color: #fff; */
