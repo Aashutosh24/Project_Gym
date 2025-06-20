@@ -1,0 +1,117 @@
+body{
+    background-image: url('/Img/yoga.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #52357B;
+}
+.login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.login h2 {
+    font-size: 2rem;
+    /* color: #4300FF; */
+    color: #FFF;
+    margin-bottom: 20px;
+    font-family: 'Recursive';
+}
+.login form {
+    /* background-color: black; */
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.7;
+    font-size: 1.6rem;
+}
+.login a{
+    text-decoration: none;
+    color: bisque;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login form input{
+    font-size: 1.2rem;
+}
+#log{
+    width: 100%;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 19px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    color: black;
+    margin-top: 14px;
+    cursor: pointer;
+
+}
+#log:hover {
+    background-color: #FF7601;
+    color: white;
+    transition: 0.3s ease-in-out;
+}
+#sign-up-link {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: #FF7601;
+    display: flex;
+    width: 110%;
+    flex-direction: row;
+}
+
+
+/* Forgot password */
+.forgot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 20px;
+
+    font-size: 1.6rem;
+    background-color: #A7C1A8;
+    width: 500px;
+}
+.forgot-container a {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.5rem;
+    margin-top: 10px;
+
+}
+.forgot-container form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+}
+.forgot-container form input {
+    width: 80%;
+    padding: 10px;
+    font-size: 19px;
+    color: black;
+    margin-top: 14px;
+}
+#reset{
+    width: 50%;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 19px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    color: black;
+    margin-top: 14px;
+    cursor: pointer;
+}
+#reset:hover {
+    background-color: #FF7601;
+    color: white;
+    transition: 0.3s ease-in-out;
+}
