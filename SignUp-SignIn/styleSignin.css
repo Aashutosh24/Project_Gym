@@ -1,15 +1,17 @@
-body{
+body {
     background-image: url('/Img/yoga.webp');
     background-size: cover;
     background-repeat: no-repeat;
     color: #52357B;
 }
-.login{
+
+.login {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
 .login h2 {
     font-size: 2rem;
     /* color: #4300FF; */
@@ -17,6 +19,7 @@ body{
     margin-bottom: 20px;
     font-family: 'Recursive';
 }
+
 .login form {
     /* background-color: black; */
     display: flex;
@@ -27,17 +30,27 @@ body{
     line-height: 1.7;
     font-size: 1.6rem;
 }
-.login a{
+
+.login a {
     text-decoration: none;
-    color: bisque;
+    color: #8A784E;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.login form input{
+
+.login a:hover {
+    color: #b47070;
+    transition: 0.3s ease-in-out;
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+.login form input {
     font-size: 1.2rem;
 }
-#log{
+
+#log {
     width: 100%;
     padding: 10px;
     border-radius: 15px;
@@ -49,11 +62,13 @@ body{
     cursor: pointer;
 
 }
+
 #log:hover {
     background-color: #FF7601;
     color: white;
     transition: 0.3s ease-in-out;
 }
+
 #sign-up-link {
     margin-top: 20px;
     font-size: 1.5rem;
@@ -72,11 +87,11 @@ body{
     justify-content: center;
     margin: auto;
     margin-top: 20px;
-
     font-size: 1.6rem;
-    background-color: #A7C1A8;
+    /* background-color: #A7C1A8; */
     width: 500px;
 }
+
 .forgot-container a {
     text-decoration: none;
     color: #000;
@@ -84,14 +99,30 @@ body{
     margin-top: 10px;
 
 }
-.forgot-container form{
+
+.forgot-container form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
+    font-family: 'unicons';
     padding: 10px;
 }
+
+.forgot-container form label {
+    font-size: 1.5rem;
+    color: #000;
+    margin-top: 10px;
+}
+
+.forgot-container h2 {
+    font-size: 2rem;
+    color: #000;
+    margin-bottom: 20px;
+    font-family: 'Recursive';
+}
+
 .forgot-container form input {
     width: 80%;
     padding: 10px;
@@ -99,7 +130,8 @@ body{
     color: black;
     margin-top: 14px;
 }
-#reset{
+
+#reset {
     width: 50%;
     padding: 10px;
     border-radius: 15px;
@@ -110,8 +142,98 @@ body{
     margin-top: 14px;
     cursor: pointer;
 }
+
 #reset:hover {
     background-color: #FF7601;
     color: white;
     transition: 0.3s ease-in-out;
+}
+
+/* Sign up */
+.sign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 20px;
+    width: 800px;
+    font-size: 1.6rem;
+    /* background-color: #A7C1A8; */
+}
+.sign a {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+.sign form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* width: 600px; */
+    font-family: 'unicons';
+    /* padding: 10px; */
+}
+.sign form label {
+    font-size: 1.5rem;
+    color: #000;
+    margin-top: 10px;
+}
+.sign h2 {
+    font-size: 2rem;
+    color: #000;
+    margin-bottom: 20px;
+    font-family: 'Recursive';
+}
+
+.sign form input {
+    width: 60%;
+    padding: 10px;
+    font-size: 19px;
+    color: black;
+    margin-top: 14px;
+}
+
+#register {
+    width: 148%;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 19px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    color: red;
+    margin-top: 14px;
+    cursor: pointer;
+}
+#register:hover {
+    background-color: #FF7601;
+    color: white;
+    transition: 0.3s ease-in-out;
+}
+#confirm-password{
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
+    justify-content: center;
+    width: 80%;
+}
+#confirm-password input{
+    width: 100%;
+}
+#login-link a{
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: #FF7601;
+    display: flex;
+    width: 110%;
+    font-family: "Playfair Display", serif;
+    flex-direction: row;
+}
+.apara{
+    color: #8A784E;
+}
+#google{
+    margin: auto;
 }

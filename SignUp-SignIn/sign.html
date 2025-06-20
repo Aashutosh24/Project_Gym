@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styleSignin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <title>Sign Up</title>
+</head>
+
+<body>
+    <div class="sign">
+    <form action="" method="post">
+
+        <h2>Sign Up</h2>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="sign-name" name="name" placeholder="Enter your name" required>
+        </div>
+        <div>
+            <label for="username">Email:</label>
+            <input type="text" id="sign-username" name="username" placeholder="Enter your username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="sign-password" name="password" placeholder="Enter the password" required>
+        </div>
+        <div id="confirm-password">
+            <label for="password">Confirm Password:</label>
+            <input type="password" id="sign-password" name="password" placeholder="Enter the password" required>
+        </div>
+        <div>
+            <button type="submit" id="register">Register</button>
+        </div>
+        <div>
+            <p class="apara"> Or Register through</p>
+            <div id="google">
+            <a href="https://accounts.google.com/signin">
+                <img src="/Img/google" alt="Google Sign-in" width="30" height="30">
+            </a>
+            </div>
+        </div>
+            <div id="login-link">
+                <p><a href="login.html">Already a user. Login Here</a></p>
+            </div>
+    </form>
+    </div>
+</body>
+
+</html>
