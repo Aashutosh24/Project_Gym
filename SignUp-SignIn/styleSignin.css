@@ -114,6 +114,7 @@ body {
     font-size: 1.5rem;
     color: #000;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .forgot-container h2 {
@@ -180,6 +181,7 @@ body {
     font-size: 1.5rem;
     color: #000;
     margin-top: 10px;
+    cursor: pointer;
 }
 .sign h2 {
     font-size: 2rem;
