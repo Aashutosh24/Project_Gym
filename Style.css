@@ -248,6 +248,52 @@ html{
     white-space: nowrap;
     padding: 20px;
 }
+.slider-container::-webkit-scrollbar {
+    display: none;
+}
+#slider {
+  transition: all 0.3s ease-in-out;
+}
+.slider-container:hover .arrow {
+  opacity: 1;
+}
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.scroll-arrow.left {
+  left: 10px;
+}
+
+.scroll-arrow.right {
+  right: 50px;
+}
+.carousel-indicators {
+  text-align: center;
+  margin-top: 10px;
+}
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: #bbb;
+  display: inline-block;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.dot.active {
+  background-color: #333;
+}
 
 .facil {
     display: inline-flex;
@@ -256,18 +302,6 @@ html{
     width: max-content;
     border: none; /* optional */
 }
-
-/* .equi-card {
-    display: inline-block;
-    flex: 0 0 auto;
-    width: 300px;
-    background-color: #03A6A1;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-} */
-
 
   .rates-section {
     /* background-color: #fff; */
@@ -281,8 +315,7 @@ html{
     gap: 30px;
     margin-top: 30px;
     flex-wrap: wrap;
-  }
-  
+  }  
   .rate-card {
     background-color: #f0f0f0;
     border: 2px solid #ddd;
@@ -318,6 +351,13 @@ html{
 .rate-card ul li {
     margin: 8px 0;
   }
+  #buy{
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
 #membership {
     position: absolute;
     top: 109rem;
@@ -325,7 +365,7 @@ html{
 }    
 
 .ai-note {
-    margin-top: 30px;
+    margin-top: 10px;
     background-color: #e6f7ff;
     border-left: 5px solid #00ccff;
     padding: 15px 20px;
@@ -346,7 +386,7 @@ html{
 
 #contact{
     position: absolute;
-    top: 145rem;
+    top: 150rem;
     width: 60%;
 }  
 #contact h2{
@@ -404,7 +444,7 @@ input[type=submit]{
 }
 footer{
     position: relative;
-    top: 170rem;
+    top: 178rem;
     background: #000;
     color: #fff;
     text-align: center;
@@ -449,6 +489,6 @@ footer{
 
 #query{
     resize: none;
-    width: 300px
+    width: 300px;
     height: 100px;
 }

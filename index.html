@@ -49,10 +49,10 @@
     </section>
     <div id="about">
         <h1>About Us</h1>
+        <button class="scroll-arrow left" onclick="scrollSlider(-1)">&#10094;</button>
+        <div class="slider-container" id="slider">
 
-        <div class="slider-container">
-
-            <div class="facil" id="slider">
+            <div class="facil" >
                 <h3>Our Facilities</h3>
 
                 <div class="equi-card">
@@ -100,7 +100,17 @@
                     </div>
                 </div>
             </div>
+
         </div>
+        <button class="scroll-arrow right" onclick="scrollSlider(1)">&#10095;</button>
+        <div class="carousel-indicators">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+    <span class="dot" onclick="goToSlide(3)"></span>
+    <span class="dot" onclick="goToSlide(4)"></span>
+  </div>
+
     </div>
     <div id="membership" class="membership">
         <div class="rates-section">
@@ -114,6 +124,7 @@
                         <li>Locker Facility</li>
                         <li>1 Trainer Session</li>
                     </ul>
+                    <button id="buy" onclick="window.location.href = 'payment.html'">Buy Now</button>
                 </div>
                 <div class="rate-card">
                     <h3>Standard</h3>
@@ -123,6 +134,7 @@
                         <li>5 Trainer Sessions</li>
                         <li>Diet Plan</li>
                     </ul>
+                    <button id="buy" onclick="window.location.href = 'payment.html'">Buy Now</button>
                 </div>
                 <div class="rate-card">
                     <h3>Premium</h3>
@@ -132,6 +144,7 @@
                         <li>Personalized Diet</li>
                         <li>Spa + Sauna Access</li>
                     </ul>
+                    <button id="buy" onclick="window.location.href = 'payment.html'">Buy Now</button>
                 </div>
             </div>
         </div>
