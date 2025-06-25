@@ -148,8 +148,6 @@
 //   }
 // };
 
-
-// Changed to use gemini-pro model instead of gemini-2.0-flash
 const fetch = require("node-fetch");
 
 exports.handler = async function(event, context) {

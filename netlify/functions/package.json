@@ -1,6 +1,6 @@
 {
   "name": "netlify-functions",
-  "version": "1.0.0",
+  "version": "1.0.0", 
   "main": "gemini.js",
   "dependencies": {
     "node-fetch": "^2.6.7"

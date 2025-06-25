@@ -5,3 +5,6 @@
 
 [build]
   command = "npm install --prefix netlify/functions"
+
+[functions."gemini"]
+  timeout = 30
