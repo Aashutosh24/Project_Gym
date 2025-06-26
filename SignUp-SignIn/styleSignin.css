@@ -26,24 +26,30 @@ body {
     flex-direction: column;
     width: 400px;
     align-items: center;
+    
     justify-content: center;
     line-height: 1.7;
     font-size: 1.6rem;
 }
-
+.login p{
+    justify-content: center;
+    display: flex;
+    font-family: "Libertinus Math", system-ui;
+}
 .login a {
     text-decoration: none;
     color: #8A784E;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: "Libertinus Math", system-ui;
 }
 
 .login a:hover {
     color: #b47070;
     transition: 0.3s ease-in-out;
     text-decoration: none;
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 .login form input {
@@ -62,7 +68,7 @@ body {
     color: black;
     margin-top: 14px;
     cursor: pointer;
-
+    font-family: "Libertinus Math", system-ui;
 }
 
 #log:hover {
@@ -99,7 +105,7 @@ body {
     color: #000;
     font-size: 1.5rem;
     margin-top: 10px;
-
+    
 }
 
 .forgot-container form {
@@ -182,10 +188,18 @@ body {
 .sign form label {
     font-size: 1.5rem;
     color: #000;
+    width: 60%;
     margin-top: 10px;
     cursor: pointer;
 }
+.sign-input{
+    width: 60%;
+    margin: 10px 0px;
+}
 .sign h2 {
+    justify-self: center;
+    text-align: center;
+    margin: auto;
     font-size: 2rem;
     color: #000;
     margin-bottom: 20px;
@@ -199,6 +213,65 @@ body {
     color: black;
     margin-top: 14px;
 }
+.sign form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Aligns labels left */
+    justify-content: center;
+    width: 100%;
+    max-width: 500px; /* Controls form width */
+}
+
+.sign-input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.sign-input label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 1.4rem;
+    color: #000;
+}
+
+.sign-input input {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    color: black;
+    box-sizing: border-box;
+}
+.sign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 20px;
+    font-size: 1.6rem;
+    width: 100%;
+    max-width: 700px;
+}
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* Leave space for the eye */
+  font-size: 18px;
+}
+
+.toggle-eye {
+  position: absolute;
+     right: 204px;
+    top: 55%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+}
+
 
 #register {
     width: 148%;
@@ -216,7 +289,7 @@ body {
     color: white;
     transition: 0.3s ease-in-out;
 }
-#confirm-password{
+/* #confirm-password{
     display: flex;
     flex-direction: row;
     align-items: center;    
@@ -225,7 +298,7 @@ body {
 }
 #confirm-password input{
     width: 100%;
-}
+} */
 #login-link a{
     margin-top: 20px;
     font-size: 1.5rem;
@@ -238,7 +311,17 @@ body {
 .apara{
     color: #8A784E;
 }
-#google{
-    margin: auto;
-    margin-left: 90px;
+
+#google-btn{
+    background-color: black;
+    color: white;
+    margin: 10px auto;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
 }

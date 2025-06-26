@@ -173,3 +173,30 @@ window.addEventListener('DOMContentLoaded', () => {
 
   restartAutoScroll(); // Start initially
 });
+
+window.addEventListener('DOMContentLoaded', () => {
+    const user = JSON.parse(localStorage.getItem('googleUser'));
+
+    if (user) {
+      // Hide login/signup
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('sign').style.display = 'none';
+
+      // Show profile
+      const profileContainer = document.createElement('li');
+      profileContainer.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px;">
+          <img src="${user.picture}" alt="Profile" style="width:30px; height:30px; border-radius:50%;">
+          <span>${user.name}</span>
+          <button onclick="logout()" style="margin-left:10px;">Logout</button>
+        </div>
+      `;
+
+      document.querySelector('nav ul').appendChild(profileContainer);
+    }
+  });
+
+  function logout() {
+    localStorage.removeItem('googleUser');
+    location.reload();
+  }

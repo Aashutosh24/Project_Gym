@@ -18,36 +18,97 @@
         <h2>Sign Up</h2>
         <div>
             <label for="sign-name">Name:</label>
-            <input type="text" id="sign-name" name="name" placeholder="Enter your name" required>
+            <input type="text" class="sign-input" id="sign-name" name="name" placeholder="Enter your name" required>
         </div>
         <div>
             <label for="sign-username">Email:</label>
-            <input type="text" id="sign-username" name="username" placeholder="Enter your username" required>
+            <input type="text" class="sign-input" id="sign-username" name="username" placeholder="Enter your username" required>
         </div>
-        <div>
+        <!-- <div>
             <label for="sign-password">Password:</label>
-            <input type="password" id="sign-password" name="password" placeholder="Enter the password" required>
-        </div>
-        <div id="confirm-password">
-            <label for="sign-con-password">Confirm Password:</label>
-            <input type="password" id="sign-con-password" name="password" placeholder="Enter the password" required>
-        </div>
+            <input type="password" class="sign-input" id="sign-password" name="password" placeholder="Enter the password" required>
+            <span class="toggle-eye" onclick="togglePassword('sign-password', this)">👁️</span>
+        </div> -->
+        <div class="sign-input password-field">
+  <label for="sign-password">Password:</label>
+  <div class="input-wrapper">
+    <input type="password" id="sign-password" placeholder="Enter your password" required />
+    <span class="toggle-eye" onclick="togglePassword('sign-password', this)">👁️</span>
+  </div>
+</div>
+        <div class="sign-input password-field">
+  <label for="sign-con-password">Confirm Password:</label>
+  <div class="input-wrapper">
+    <input type="password" id="sign-con-password" placeholder="Confirm your password" required />
+    <span class="toggle-eye" onclick="togglePassword('sign-con-password', this)">👁️</span>
+  </div>
+</div>
         <div>
             <button type="submit" id="register">Register</button>
         </div>
         <div>
             <p class="apara"> Or Register through</p>
-            <div id="google">
-            <a href="https://accounts.google.com/signin">
-                <img src="/Img/google" alt="Google Sign-in" width="30" height="30">
-            </a>
-            </div>
+            <button id="google-btn">
+                <img src="/Img/google" alt="G" style="width:20px;">
+                Sign in with Google
+            </button>
         </div>
             <div id="login-link">
                 <p><a href="login.html">Already a user. Login Here</a></p>
             </div>
     </form>
     </div>
+    <script>
+        window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "998630166906-4t8538t5auad8ft5406de8lg04pg8qmm.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+
+      document.getElementById('google-btn').addEventListener('click', () => {
+        google.accounts.id.prompt(); // shows popup
+      });
+    };
+
+    function handleCredentialResponse(response) {
+      const token = response.credential;
+      const payload = parseJwt(token);
+
+      // Save user info to localStorage
+      localStorage.setItem('googleUser', JSON.stringify({
+        name: payload.name,
+        email: payload.email,
+        picture: payload.picture
+      }));
+
+      // Redirect to homepage
+      window.location.href = "/index.html";
+    }
+
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+    document.getElementById('show-sign-password').addEventListener('change', function () {
+    const pwd = document.getElementById('sign-password');
+    pwd.type = this.checked ? 'text' : 'password';
+  });
+
+  document.getElementById('show-sign-con-password').addEventListener('change', function () {
+    const cpwd = document.getElementById('sign-con-password');
+    cpwd.type = this.checked ? 'text' : 'password';
+  });
+  function togglePassword(inputId, eyeIcon) {
+    const input = document.getElementById(inputId);
+    const isPassword = input.type === "password";
+    input.type = isPassword ? "text" : "password";
+    eyeIcon.textContent = isPassword ? "🙈" : "👁️"; // Change icon
+  }
+    </script>
 </body>
 
 </html>
