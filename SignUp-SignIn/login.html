@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
-     
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
     <title>Login</title>
 </head>
@@ -31,13 +31,50 @@
             <p><a href="forgot-password.html">Forgot Password?</a></p>
             <hr style="border: none; height: 5px; background-color: #ccc; margin: 20px 0;">
             <p> Or login through</p>
-            <a href="https://accounts.google.com/signin" >
+
+            <!-- <a href="https://accounts.google.com/signin" >
                 <img src="/Img/google" alt="Google Sign-in" width="30" height="30">
-            </a>
+            </a> -->
+            <div id="g_id_onload"
+         data-client_id="998630166906-4t8538t5auad8ft5406de8lg04pg8qmm.apps.googleusercontent.com"
+         data-context="signin"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+
+    <div class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="pill"
+         data-logo_alignment="left">
+    </div>
         <div id="sign-up-link">
             Don't have an account? &nbsp <a href="sign.html">Sign up</a>
         </div>
     </form>
     </div>
 </body>
+<script>
+  function handleCredentialResponse(response) {
+    const token = response.credential;
+    const payload = parseJwt(token);
+    console.log("Google User Info:", payload);
+
+    // Show welcome message or redirect
+    alert(`Welcome ${payload.name}`);
+    window.location.href = "/index.html"; // or dashboard page
+  }
+
+  function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  }
+</script>
+
 </html>
