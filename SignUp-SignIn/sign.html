@@ -30,15 +30,23 @@
             <span class="toggle-eye" onclick="togglePassword('sign-password', this)">👁️</span>
         </div> -->
         <div class="sign-input password-field">
-  <label for="sign-password">Password:</label>
-  <div class="input-wrapper">
+  <label for="sign-password" style="
+    display: inline;
+    margin: 0px 84px;">Password:</label>
+  <div class="input-wrapper" style="
+    display: inline;
+    margin: 0px 84px;">
     <input type="password" id="sign-password" placeholder="Enter your password" required />
     <span class="toggle-eye" onclick="togglePassword('sign-password', this)">👁️</span>
   </div>
 </div>
         <div class="sign-input password-field">
-  <label for="sign-con-password">Confirm Password:</label>
-  <div class="input-wrapper">
+  <label for="sign-con-password" style="
+    display: inline;
+    margin: 0px 84px;">Confirm Password:</label>
+  <div class="input-wrapper" style="
+    display: inline;
+    margin: 0px 84px;">
     <input type="password" id="sign-con-password" placeholder="Confirm your password" required />
     <span class="toggle-eye" onclick="togglePassword('sign-con-password', this)">👁️</span>
   </div>
@@ -48,7 +56,7 @@
         </div>
         <div>
             <p class="apara"> Or Register through</p>
-            <button id="google-btn">
+            <button type="button" id="google-btn">
                 <img src="/Img/google" alt="G" style="width:20px;">
                 Sign in with Google
             </button>

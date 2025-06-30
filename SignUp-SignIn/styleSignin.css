@@ -264,7 +264,7 @@ body {
 
 .toggle-eye {
   position: absolute;
-     right: 204px;
+     right: 5px;
     top: 55%;
   transform: translateY(-50%);
   cursor: pointer;

@@ -200,3 +200,33 @@ window.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem('googleUser');
     location.reload();
   }
+
+  function handleCredentialResponse(response) {
+  const token = response.credential;
+  const payload = parseJwt(token);
+
+  // Save in localStorage
+  localStorage.setItem('googleUser', JSON.stringify({
+    name: payload.name,
+    email: payload.email,
+    picture: payload.picture
+  }));
+
+  // Send to backend
+  fetch('http://localhost:5000/api/save-user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: payload.name,
+      email: payload.email,
+      picture: payload.picture
+    })
+  }).then(res => res.json())
+    .then(data => console.log("User saved to DB:", data))
+    .catch(err => console.error("Error saving user:", err));
+
+  // Redirect
+  window.location.href = "/index.html";
+}

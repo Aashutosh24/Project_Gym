@@ -77,6 +77,13 @@ html{
 .call {
     float: right;
 } 
+#profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+}
+
 #home::before{
     content: "";
     position: absolute;
