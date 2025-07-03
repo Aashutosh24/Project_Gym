@@ -1,0 +1,330 @@
+/* Enhanced Fitness Recommendation System Styles */
+
+/* AI Modal Enhancements */
+#aiModal {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.4;
+}
+
+#aiModal h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+#aiModal h4 {
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+/* Form Styling */
+#aiModal label {
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+#aiModal input,
+#aiModal select,
+#aiModal textarea {
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+#aiModal input:focus,
+#aiModal select:focus,
+#aiModal textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Button Styling */
+#aiModal button {
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+#aiModal button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Quick Results Styling */
+#quickResults {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-left: 4px solid #28a745;
+}
+
+#quickResults h4 {
+    color: #28a745;
+    margin-bottom: 10px;
+}
+
+/* Response Area Styling */
+#response {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#response pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+    font-family: inherit;
+}
+
+/* Progress Section Styling */
+#progressSection {
+    background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+    border-left: 4px solid #28a745;
+}
+
+#progressSection h4 {
+    color: #155724;
+}
+
+/* Radio Button Styling */
+#aiModal input[type="radio"] {
+    margin-right: 5px;
+    transform: scale(1.1);
+}
+
+#aiModal input[type="radio"]:checked {
+    accent-color: #3498db;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #aiModal {
+        width: calc(100vw - 40px);
+        left: 20px;
+        right: 20px;
+        max-width: none;
+    }
+    
+    #quickResultsContent {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Animation for modal appearance */
+@keyframes modalSlideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#aiModal {
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Macronutrient Distribution Chart Styling */
+.macro-chart {
+    display: flex;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.macro-protein {
+    background: #e74c3c;
+}
+
+.macro-carbs {
+    background: #f39c12;
+}
+
+.macro-fat {
+    background: #3498db;
+}
+
+/* BMI Category Color Coding */
+.bmi-underweight { color: #3498db; }
+.bmi-normal { color: #2ecc71; }
+.bmi-overweight { color: #f39c12; }
+.bmi-obese { color: #e74c3c; }
+
+/* Loading States */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+/* Tooltip Styling */
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2c3e50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.tooltip:hover::before {
+    opacity: 1;
+}
+
+/* Success/Error Messages */
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+/* Chart Styling for Progress */
+.progress-chart {
+    width: 100%;
+    height: 200px;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+/* Educational Content Styling */
+.educational-tip {
+    background: #e1f5fe;
+    border-left: 4px solid #01579b;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.educational-tip h5 {
+    color: #01579b;
+    margin: 0 0 10px 0;
+}
+
+.educational-tip p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Recommendation Card Styling */
+.recommendation-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.recommendation-card h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+.recommendation-card ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.recommendation-card li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+/* AI Provider Status */
+.ai-provider-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.provider-active {
+    width: 8px;
+    height: 8px;
+    background: #28a745;
+    border-radius: 50%;
+}
+
+.provider-inactive {
+    width: 8px;
+    height: 8px;
+    background: #dc3545;
+    border-radius: 50%;
+}
+
+/* Fitness Goal Icons */
+.goal-icon {
+    font-size: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Activity Level Indicators */
+.activity-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.activity-sedentary { background: #e74c3c; }
+.activity-light { background: #f39c12; }
+.activity-moderate { background: #f1c40f; }
+.activity-active { background: #2ecc71; }
+.activity-very-active { background: #27ae60; }

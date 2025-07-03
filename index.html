@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="fitness-styles.css">
 </head>
 
 <body>
@@ -185,25 +186,141 @@
     <img id="aiBtn" src="Img/AI.jpg" alt="AI Helper">
 
     <div id="aiModal"
-        style="display: none; position: fixed; bottom: 100px; left: 20px; background: white; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.3); padding: 20px; width: 300px; z-index: 1001;">
-        <h3>AI Fitness Assistant</h3>
-        <input type="number" id="height" placeholder="Height (cm)" style="width: 100%; margin-bottom: 8px;">
-        <input type="number" id="weight" placeholder="Weight (kg)" style="width: 100%; margin-bottom: 8px;">
-        <select id="goal" style="width: 100%; margin-bottom: 8px;">
-            <option value="">Choose goal</option>
-            <option value="gain muscle">Gain Muscle</option>
-            <option value="lose weight">Lose Weight</option>
-            <option value="maintain weight">Maintain Weight</option>
-        </select>
-        <button onclick="askGemini()"
-            style="width: 100%; background-color: #00ccff; color: white; border: none; padding: 8px;">Ask AI</button>
-        <div id="response"></div>
+        style="display: none; position: fixed; bottom: 20px; left: 20px; background: white; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.3); padding: 20px; width: 400px; max-height: 90vh; overflow-y: auto; z-index: 1001;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin: 0;">🏋️ AI Fitness Assistant</h3>
+            <button onclick="closeAIModal()" style="border: none; background: none; font-size: 18px; cursor: pointer;">×</button>
+        </div>
+        
+        <div id="fitnessForm">
+            <!-- Unit System Toggle -->
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Unit System:</label>
+                <div style="display: flex; gap: 10px;">
+                    <label><input type="radio" name="unitSystem" value="metric" checked> Metric (kg/cm)</label>
+                    <label><input type="radio" name="unitSystem" value="imperial"> Imperial (lbs/ft)</label>
+                </div>
+            </div>
 
+            <!-- Height Input -->
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Height:</label>
+                <div id="heightInputMetric">
+                    <input type="number" id="height" placeholder="Height (cm)" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div id="heightInputImperial" style="display: none;">
+                    <div style="display: flex; gap: 5px;">
+                        <input type="number" id="heightFeet" placeholder="Feet" style="width: 48%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <input type="number" id="heightInches" placeholder="Inches" style="width: 48%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weight Input -->
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Weight:</label>
+                <input type="number" id="weight" placeholder="Weight (kg)" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <!-- Age -->
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Age:</label>
+                <input type="number" id="age" placeholder="Age (years)" min="13" max="100" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <!-- Gender -->
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Gender:</label>
+                <select id="gender" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <!-- Activity Level -->
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Activity Level:</label>
+                <select id="activityLevel" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">Select activity level</option>
+                    <option value="sedentary">Sedentary (little/no exercise)</option>
+                    <option value="light">Light (1-3 days/week)</option>
+                    <option value="moderate">Moderate (3-5 days/week)</option>
+                    <option value="active">Active (6-7 days/week)</option>
+                    <option value="very_active">Very Active (2x/day, intense)</option>
+                </select>
+            </div>
+
+            <!-- Fitness Goal -->
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Fitness Goal:</label>
+                <select id="goal" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">Choose goal</option>
+                    <option value="lose_weight">Lose Weight</option>
+                    <option value="gain_muscle">Gain Muscle</option>
+                    <option value="maintain_weight">Maintain Weight</option>
+                    <option value="general_fitness">General Fitness</option>
+                </select>
+            </div>
+
+            <!-- Health Conditions -->
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Health Conditions (Optional):</label>
+                <textarea id="healthConditions" placeholder="Any health conditions, injuries, or restrictions..." style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; min-height: 60px; resize: vertical;"></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button onclick="calculateBasics()" style="flex: 1; background-color: #2ecc71; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer;">
+                    📊 Calculate BMI/BMR
+                </button>
+                <button onclick="getAIRecommendation()" style="flex: 1; background-color: #00ccff; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer;">
+                    🤖 Get AI Recommendation
+                </button>
+            </div>
+            
+            <!-- Additional Features -->
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button onclick="showNutritionFacts()" style="flex: 1; background-color: #e67e22; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                    📊 Nutrition Facts
+                </button>
+                <button onclick="generateMealPlan()" style="flex: 1; background-color: #9b59b6; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                    🍽️ Meal Plan
+                </button>
+                <button onclick="showWorkoutVideos()" style="flex: 1; background-color: #34495e; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                    🎥 Workouts
+                </button>
+            </div>
+
+            <!-- Quick Results Display -->
+            <div id="quickResults" style="display: none; background: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+                <h4 style="margin: 0 0 10px 0;">Quick Analysis</h4>
+                <div id="quickResultsContent"></div>
+            </div>
+        </div>
+
+        <!-- Response Area -->
+        <div id="response" style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px; min-height: 100px; max-height: 400px; overflow-y: auto;"></div>
+        
+        <!-- Progress Tracking -->
+        <div id="progressSection" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border-radius: 4px;">
+            <h4 style="margin: 0 0 10px 0;">📈 Progress Tracking</h4>
+            <button onclick="saveProgress()" style="background-color: #27ae60; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-right: 10px;">
+                Save Current Data
+            </button>
+            <button onclick="viewProgress()" style="background-color: #3498db; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                View Progress
+            </button>
+        </div>
     </div>
 
 
 
     <footer> Copywrite &copy; www.FitnessClub.com &nbsp; All Rights are Resvered!</footer>
+    <script src="fitness-calculator.js"></script>
+    <script src="huggingface-integration.js"></script>
+    <script src="educational-system.js"></script>
+    <script src="ai-providers.js"></script>
     <script src="index.js"></script>
 </body>
 
