@@ -43,6 +43,7 @@ html{
 }
 #sign{
     border: 2px solid rgba(67, 52, 52, 0.789);
+    width: fit-content;
     font-size: 15px;
     text-decoration: none;
     float: right; 
@@ -55,8 +56,7 @@ html{
     text-decoration: none;
     color: aqua;
     /* font-family: Arial, Helvetica, sans-serif; */
-    font-size: 24px;
-    padding: 24px;
+    /* font-size: 24px; */
 }
 #navbar li a:hover {
     color: rgba(2, 103, 255, 0.826);
@@ -83,6 +83,8 @@ html{
   gap: 8px;
   font-size: 1rem;
 }
+
+
 
 #home::before{
     content: "";
@@ -451,7 +453,7 @@ input[type=submit]{
 }
 footer{
     position: relative;
-    top: 178rem;
+    top: 184rem;
     background: #000;
     color: #fff;
     text-align: center;
@@ -498,4 +500,317 @@ footer{
     resize: none;
     width: 300px;
     height: 100px;
+}
+
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  
+    z-index: 1000;
+    padding: 0 20px;
+}
+
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.left img {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    object-fit: cover;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: aqua;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Navigation Menu */
+.centre {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 140px;
+}
+
+.centre li {
+    margin: 0 10px;
+}
+
+.centre li a {
+    text-decoration: none;
+    color: aqua;
+    font-size: 18px;
+    padding: 10px 15px;
+    display: block;
+    transition: color 0.3s;
+}
+
+.centre li a:hover {
+    color: rgba(2, 103, 255, 0.826);
+}
+
+/* Auth Buttons */
+.auth-buttons {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-buttons li {
+    margin: 0 5px;
+}
+
+.auth-buttons li a {
+    text-decoration: none;
+    color: aqua;
+    font-size: 15px;
+    padding: 8px 15px;
+    border: 2px solid rgba(67, 52, 52, 0.789);
+    border-radius: 5px;
+    display: block;
+    transition: color 0.3s;
+}
+
+.auth-buttons li a:hover {
+    color: red;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        background-color: rgba(0, 0, 0, 0.9);
+        
+      }
+      .hamburger {
+        position: relative;
+        top: 30px;
+        display: flex;
+      }
+      
+      .centre {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: rgba(0, 0, 0, 0.95);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        transition: left 0.3s ease;
+        padding-top: 50px;
+        padding-left: 0px !important;
+    }
+    
+    .centre.active {
+        left: 0;
+    }
+    
+    .centre li {
+        margin: 20px 0;
+    }
+    
+    .centre li a {
+        font-size: 24px;
+        padding: 15px 30px;
+    }
+    
+    .auth-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .auth-buttons li {
+        margin: 5px 0;
+    }
+    #sign{
+      position: relative;
+      left: 14em;
+    }
+    #intro {
+        top: 150px; 
+        left: 68px;
+        font-size: 28px;
+        width: 80%;
+    }
+    
+    #moti {
+        right: 20px;
+        width: 80%;
+        font-size: 20px;
+        top: 400px;
+    }
+    
+    #Home {
+        width: 90%;
+        margin: 0 5%;
+        padding: 20px;
+        top: 60em !important;
+    }
+    
+    .equi-card {
+        width: 30em !important;
+        height: fit-content;
+    }
+    .equi-content p{
+        font-size: 0.6rem;
+    }
+    .rate-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .rate-card {
+        width: 90%;
+        max-width: 300px;
+    }
+    
+    #contact {
+        width: 90%;
+        margin: 0 5%;
+        flex-direction: column;
+        text-align: center;
+        position: relative;
+        top: 190em;
+    }
+    
+    #details {
+        margin-top: 42px;
+        margin-bottom: 5px !important;
+    }
+    
+    #contac {
+        margin-top: 14px;
+        width: 100%;
+    }
+    
+    #query {
+        width: 100%;
+    }
+    footer{
+      top: 193em;
+    width: 110%;
+    }
+    #aiModal {
+        width: 280px;
+        left: 10px;
+        bottom: 90px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #intro {
+        font-size: 28px;
+        top: 150px;
+    }
+    #home::before {
+      width: 110%;
+    }
+    #moti {
+        font-size: 18px;
+        top: 400px;
+    }
+    
+    #Home {
+        top: 40em;
+        font-size: 14px;
+    }
+    
+    .equi-card {
+        width: 280px;
+    }
+    
+    .scroll-arrow {
+        display: none;
+    }
+    
+    #contact h2 {
+        font-size: 1.5rem;
+    }
+    
+    #contac label {
+        font-size: 1rem;
+    }
+    
+    #contac input,
+    #contac textarea {
+        font-size: 1rem;
+    }
+}
+
+/* Tablet specific styles */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .centre li a {
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+    
+    #intro {
+        font-size: 45px;
+        left: 40px;
+    }
+    
+    #moti {
+        font-size: 25px;
+        right: 40px;
+    }
+    
+    #Home {
+        width: 85%;
+        margin: 0 7.5%;
+    }
+    
+    .equi-card {
+        width: 400px;
+    }
+    
+    .rate-cards {
+        gap: 20px;
+    }
+    
+    .rate-card {
+        width: 220px;
+    }
+    
+    #contact {
+        width: 80%;
+        margin: 0 10%;
+    }
 }

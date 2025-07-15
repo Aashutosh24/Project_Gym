@@ -19,7 +19,7 @@
             <div class="left">
                 <img src="Img/Logo bodybuilder.jpg" alt="our logo">
             </div>
-            <div class="centre">
+            <!-- <div class="centre">
                 <li> <a href="#home">Home</a></li>
                 <li><a href="#about">About us</a></li>
                 <li><a href="#membership">Membership</a></li>
@@ -27,8 +27,44 @@
                 <li id="login"><a href="SignUp-SignIn/login.html">Log in</a></li>
                 <li id="sign"><a href="SignUp-SignIn/sign.html">Sign up</a></li>
                 <li id="profile" style="display: none;"></li>
+            </div> -->
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <div class="centre" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About us</a></li>
+                <li><a href="#membership">Membership</a></li>
+                <li><a href="#contact">Contact us</a></li>
+            </div>
+            
+            <!-- Login/Signup buttons stay on the right -->
+            <div class="auth-buttons">
+                <li id="login"><a href="SignUp-SignIn/login.html">Log in</a></li>
+                <li id="sign"><a href="SignUp-SignIn/sign.html">Sign up</a></li>
+                <li id="profile" style="display: none;"></li>
             </div>
         </nav>
+        <!-- <div class="hamburger" id="hamburger-menu">&#9776;</div>
+
+<nav id="navbar" class="nav-collapsed">
+  <div class="left">
+    <img src="Img/Logo bodybuilder.jpg" alt="our logo">
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About us</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#contact">Contact us</a></li>
+  </ul>
+  <div class="right-btns">
+    <a id="login" href="SignUp-SignIn/login.html">Log in</a>
+  </div>
+</nav> -->
     </header>
     <section id="home">
         <div id="intro">Welcome to <p>Fitness Club</p>
@@ -42,8 +78,7 @@
             Push your limits and achieve your fitness goals at PowerFit Gym. Whether you're into strength training,
             cardio, or group workouts, we provide top-notch equipment and expert guidance to keep you motivated. Join a
             community that supports and inspires you every step of the way.
-            <p>
-                🔥 Modern Equipment</p>
+            <p>🔥 Modern Equipment</p>
             <p>👟 Group Classes</p>
             <p>💪 Certified Trainers</p>
             <p>🏋️ Flexible Memberships</p>
@@ -205,6 +240,14 @@
 
     <footer> Copywrite &copy; www.FitnessClub.com &nbsp; All Rights are Resvered!</footer>
     <script src="index.js"></script>
+    <script>
+const hamburger = document.getElementById('hamburger-menu');
+const navbar = document.getElementById('navbar');
+hamburger.onclick = () => {
+  navbar.classList.toggle('nav-collapsed');
+};
+</script>
+
 </body>
 
 
