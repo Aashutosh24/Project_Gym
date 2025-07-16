@@ -180,7 +180,7 @@ html{
 #about{
     position: absolute;
     top: 76rem;
-    width: 100%;
+    width: 96%;
     padding: 50px 20px;
     text-align: center;
 }
@@ -576,7 +576,7 @@ footer{
 .centre li a {
     text-decoration: none;
     color: aqua;
-    font-size: 18px;
+    font-size: 20px;
     padding: 10px 15px;
     display: block;
     transition: color 0.3s;

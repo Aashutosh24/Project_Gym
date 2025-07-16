@@ -1,3 +1,4 @@
+/*
 function scrollSlider(direction) {
   const slider = document.getElementById('slider');
   const scrollAmount = 700;
@@ -278,7 +279,11 @@ document.addEventListener('DOMContentLoaded', function() {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
     });
-    
+    if (navMenu.classList.contains('active')) {
+            body.style.overflow = 'hidden';
+        } else {
+            body.style.overflow = 'auto';
+        }
     // Close menu when clicking on a link
     const navLinks = document.querySelectorAll('.centre a');
     navLinks.forEach(link => {
@@ -293,6 +298,280 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!hamburger.contains(event.target) && !navMenu.contains(event.target)) {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
+        }
+    });
+});
+
+// Existing JavaScript functions
+function scrollSlider(direction) {
+    const slider = document.getElementById('slider');
+    const scrollAmount = 700;
+
+    slider.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".tomember").addEventListener("click", function () {
+        const section = document.getElementById("membership");
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+    });
+
+    document.getElementById("aiBtn").onclick = () => {
+        const modal = document.getElementById("aiModal");
+        modal.style.display = modal.style.display === "none" ? "block" : "none";
+    };
+});
+
+async function askGemini() {
+    const height = document.getElementById("height").value;
+    const weight = document.getElementById("weight").value;
+    const goal = document.getElementById("goal").value;
+
+    if (!height || !weight || !goal) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    const prompt = `I am ${height} cm tall and weigh ${weight} kg. My goal is to ${goal}. Suggest a workout and diet plan.`;
+
+    const responseBox = document.getElementById("response");
+    responseBox.innerText = "Thinking...";
+
+    try {
+        const result = await fetch("/.netlify/functions/gemini", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt })
+        });
+
+        const data = await result.json();
+        const reply = data?.reply || "No response. Try again.";
+        responseBox.innerText = reply;
+    } catch (error) {
+        responseBox.innerText = "Error contacting AI.";
+        console.error("AI Error:", error);
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('slider');
+    const cardWidth = 500;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let autoScrollInterval;
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        clearInterval(autoScrollInterval);
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+        autoScrollInterval = startAutoScroll();
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2;
+        slider.scrollLeft = scrollLeft - walk;
+    });
+
+    window.scrollSlider = function(direction) {
+        clearInterval(autoScrollInterval);
+        slider.scrollBy({
+            left: direction * cardWidth,
+            behavior: 'smooth'
+        });
+        autoScrollInterval = startAutoScroll();
+    };
+
+    function startAutoScroll() {
+        return setInterval(() => {
+            if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
+                slider.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            }
+        }, 4000);
+    }
+
+    autoScrollInterval = startAutoScroll();
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('slider');
+    const dots = document.querySelectorAll('.dot');
+    const cardWidth = slider.querySelector('.equi-card').offsetWidth + 20;
+    let currentIndex = 0;
+    let autoScrollInterval;
+
+    window.goToSlide = function (index) {
+        currentIndex = index;
+        slider.scrollTo({ left: index * cardWidth, behavior: 'smooth' });
+        updateDots();
+        restartAutoScroll();
+    };
+
+    window.scrollSlider = function (direction) {
+        currentIndex += direction;
+        if (currentIndex < 0) currentIndex = dots.length - 1;
+        if (currentIndex >= dots.length) currentIndex = 0;
+        slider.scrollTo({ left: currentIndex * cardWidth, behavior: 'smooth' });
+        updateDots();
+        restartAutoScroll();
+    };
+
+    function updateDots() {
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
+    }
+
+    function autoScroll() {
+        currentIndex = (currentIndex + 1) % dots.length;
+        slider.scrollTo({ left: currentIndex * cardWidth, behavior: 'smooth' });
+        updateDots();
+    }
+
+    function restartAutoScroll() {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = setInterval(autoScroll, 3000);
+    }
+
+    restartAutoScroll();
+});
+
+// User authentication functions
+window.addEventListener('DOMContentLoaded', () => {
+    const user = JSON.parse(localStorage.getItem('googleUser'));
+
+    if (user) {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('sign').style.display = 'none';
+
+        const profileContainer = document.createElement('div');
+        profileContainer.style.backgroundColor = 'white';
+        profileContainer.style.padding = '10px';
+        profileContainer.style.borderRadius = '10px';
+        profileContainer.style.display = 'flex';
+        profileContainer.style.alignItems = 'center';
+        profileContainer.style.gap = '10px';
+
+        profileContainer.innerHTML = `
+            <img src="${user.picture || 'https://via.placeholder.com/30'}" 
+                 alt="Profile" 
+                 style="width:30px; height:30px; border-radius:50%;">
+            <span>${user.name || 'User'}</span>
+            <button onclick="logout()" style="padding:4px 8px;">Logout</button>
+        `;
+
+        document.querySelector('.auth-buttons').appendChild(profileContainer);
+    }
+});
+
+function logout() {
+    localStorage.removeItem('googleUser');
+    location.reload();
+}
+
+function handleCredentialResponse(response) {
+    const token = response.credential;
+    const payload = parseJwt(token);
+
+    localStorage.setItem('googleUser', JSON.stringify({
+        name: payload.name,
+        email: payload.email,
+        picture: payload.picture
+    }));
+
+    fetch('http://localhost:5000/api/save-user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: payload.name,
+            email: payload.email,
+            picture: payload.picture
+        })
+    }).then(res => res.json())
+      .then(data => console.log("User saved to DB:", data))
+      .catch(err => console.error("Error saving user:", err));
+
+    window.location.href = "/index.html";
+}
+
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+}
+    */
+
+
+// Hamburger Menu Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    const body = document.body;
+    
+    hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        
+        // Prevent/allow body scrolling based on menu state
+        if (navMenu.classList.contains('active')) {
+            body.style.overflow = 'hidden';
+        } else {
+            body.style.overflow = 'auto';
+        }
+    });
+    
+    // Close menu when clicking on a link
+    const navLinks = document.querySelectorAll('.centre a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            body.style.overflow = 'auto'; // Re-enable scrolling
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!hamburger.contains(event.target) && !navMenu.contains(event.target)) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+    });
+    
+    // Close menu on window resize (when switching from mobile to desktop)
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            body.style.overflow = 'auto'; // Re-enable scrolling
         }
     });
 });
