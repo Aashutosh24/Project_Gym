@@ -5,7 +5,11 @@
   "scripts": {
     "dev": "netlify dev"
   },
-  "dependencies": {},
+  "dependencies": {
+    "cli": "^1.0.1",
+    "netlify": "^22.3.0",
+    "node-fetch": "^3.3.2"
+  },
   "devDependencies": {
     "netlify-cli": "^15.0.0"
   }
