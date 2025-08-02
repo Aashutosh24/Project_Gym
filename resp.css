@@ -1,0 +1,225 @@
+@media screen and (max-width: 768px) {
+    .header {
+        background-color: rgba(0, 0, 0, 0.9);
+        
+      }
+      .hamburger {
+        position: relative;
+        top: 30px;
+        display: flex;
+      }
+      
+      .centre {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: rgba(0, 0, 0, 0.95);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        transition: left 0.3s ease;
+        padding-top: 50px;
+        padding-left: 0px !important;
+    }
+    #home::before{
+        width: 112%
+    }
+    .centre.active {
+        left: 0;
+    }
+    
+    .centre li {
+        margin: 20px 0;
+    }
+    
+    .centre li a {
+        font-size: 24px;
+        padding: 15px 30px;
+    }
+    
+    .auth-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .auth-buttons li {
+        margin: 5px 0;
+    }
+    #sign{
+      position: relative;
+      left: 14em;
+    }
+    #intro {
+        top: 150px; 
+        left: 68px;
+        font-size: 28px;
+        width: 80%;
+    }
+    
+    #moti {
+        right: 20px;
+        width: 80%;
+        font-size: 20px;
+        top: 400px;
+    }
+    
+    #Home {
+        width: 90%;
+        margin: 0 5%;
+        padding: 20px;
+        top: 60em !important;
+    }
+    #intro button{
+        margin-left: 2em;
+    }
+    
+    .equi-card {
+        width: 30em;
+        height: fit-content;
+    }
+    .equi-content p{
+        font-size: 0.6rem;
+    }
+    .rate-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .rate-card {
+        width: 90%;
+        max-width: 300px;
+    }
+    
+    #contact {
+        width: 90%;
+        margin: 0 5%;
+        flex-direction: column;
+        text-align: center;
+        position: relative;
+        top: 190em;
+    }
+    
+    #details {
+        margin-top: 42px;
+        margin-bottom: 5px !important;
+    }
+    
+    #contac {
+        margin-top: 14px;
+        width: 100%;
+    }
+    
+    #query {
+        width: 100%;
+    }
+    footer{
+      top: 193em;
+        width: 112%;
+    }
+    #aiModal {
+        width: 280px;
+        left: 10px;
+        bottom: 90px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #intro {
+        font-size: 34px;
+        left: 4em;
+        top: 225px;
+        display: block;
+    }
+    #intro p {
+        color: #F5CBCB;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.503);
+    }
+    #home::before {
+      width: 112%;
+    }
+    #moti {
+        font-size: 22px;
+        top: 400px;
+        left: 3em;
+        color: #F3E2D4;
+    }
+    .tomember {
+        font-size: 1.3em !important;
+        left: 0.8em;
+    }
+    #Home {
+        top: 40em;
+        font-size: 14px;
+    }
+    .equi-card {
+        width: 280px !important;
+    }
+    
+    .scroll-arrow {
+        display: none;
+    }
+    #membership {
+        top: 101rem;
+        margin-left: 18px;
+    }
+    #contact h2 {
+        font-size: 1.5rem;
+    }
+    #contact{
+    /* position: absolute; */
+    top: 180rem;
+    }
+    #contac label {
+        font-size: 1rem;
+    }
+    
+    #contac input,
+    #contac textarea {
+        font-size: 1rem;
+    }
+    footer{
+        top: 185rem;
+    }
+}
+
+/* Tablet specific styles */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .centre li a {
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+    
+    #intro {
+        font-size: 45px;
+        left: 40px;
+    }
+    
+    #moti {
+        font-size: 25px;
+        right: 40px;
+    }
+    
+    #Home {
+        width: 85%;
+        margin: 0 7.5%;
+    }
+    
+    .equi-card {
+        width: 400px;
+    }
+    
+    .rate-cards {
+        gap: 20px;
+    }
+    
+    .rate-card {
+        width: 220px;
+    }
+    
+    #contact {
+        width: 80%;
+        margin: 0 10%;
+    }
+}
