@@ -24,7 +24,6 @@ body {
   max-width: 400px;
   border: 1px solid black;
   padding: 40px 30px;
-  /* background-color: var(--secondary); */
   box-shadow: 8px 8px 0px black;
 position: relative;
   border-radius: 12px;
@@ -37,7 +36,6 @@ position: relative;
   left: 6px;
   right: -6px;
   bottom: -6px;
-  /* border: 1px solid cadetblue; */
   z-index: -1;
   border-radius: 12px;
 }

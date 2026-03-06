@@ -68,22 +68,38 @@
 </nav> -->
     </header>
     <section id="home">
-        <div id="intro">Welcome to <p>Fitness Club</p>
-            <button type="button" onclick="location.href='#about'">Click to know more</button>
-        </div>
-        <div id="moti">Take the first step towards a healthier, stronger you. Join us today!
+        <section class="hero">
+  <canvas id="heroCanvas"></canvas>
+</section>
+        <div class="hero-content">
 
-            <button class="tomember"> See Plan </button>
-        </div>
-        <div id="Home">Your Fitness, Your Way
-            Push your limits and achieve your fitness goals at PowerFit Gym. Whether you're into strength training,
-            cardio, or group workouts, we provide top-notch equipment and expert guidance to keep you motivated. Join a
-            community that supports and inspires you every step of the way.
-            <p>🔥 Modern Equipment</p>
-            <p>👟 Group Classes</p>
-            <p>💪 Certified Trainers</p>
-            <p>🏋️ Flexible Memberships</p>
-        </div>
+<div id="intro" class="reveal-left">
+Welcome to <p>Fitness Club</p>
+<button onclick="location.href='#about'">Know More</button>
+</div>
+
+<div id="moti" class="reveal-right">
+Take the first step towards a healthier, stronger you.
+<button class="tomember">See Plan</button>
+</div>
+
+</div>
+
+<div id="Home">
+
+<p class="reveal">Your Fitness, Your Way</p>
+
+<p class="reveal">Push your limits and achieve your fitness goals at PowerFit Gym.</p>
+
+<p class="reveal-left">🔥 Modern Equipment</p>
+
+<p class="reveal-left">👟 Group Classes</p>
+
+<p class="reveal-right">💪 Certified Trainers</p>
+
+<p class="reveal-right">🏋️ Flexible Memberships</p>
+
+</div>
     </section>
     <div id="about">
         <h1>About Us</h1>
@@ -248,6 +264,7 @@ hamburger.onclick = () => {
   navbar.classList.toggle('nav-collapsed');
 };
 </script>
+<script src="hero.js"></script>
 
 </body>
 
