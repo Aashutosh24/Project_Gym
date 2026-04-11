@@ -1,5 +1,7 @@
 const canvas = document.getElementById('heroCanvas');
-const ctx = canvas.getContext('2d');
+let cachedCanvasRect = { width: 0, height: 0 };
+let cachedHomeHeight = 0;
+const ctx = canvas.getContext('2d', { alpha: false }); 
 
 // Animation state with smooth interpolation
 let animationState = {
@@ -37,8 +39,12 @@ const easings = {
 
 // Set canvas dimensions with retina support
 function setCanvasSize() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2x for performance
+  const dpr = Math.min(window.devicePixelRatio || 1, 2); 
   const rect = canvas.getBoundingClientRect();
+  
+  // Cache the dimensions
+  cachedCanvasRect.width = rect.width;
+  cachedCanvasRect.height = rect.height;
   
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
@@ -47,6 +53,12 @@ function setCanvasSize() {
   
   canvas.style.width = rect.width + 'px';
   canvas.style.height = rect.height + 'px';
+
+  // Cache home height
+  const homeSection = document.getElementById('home');
+  if (homeSection) {
+    cachedHomeHeight = homeSection.offsetHeight;
+  }
 }
 
 setCanvasSize();
@@ -61,7 +73,14 @@ function preloadImages() {
     const img = new Image();
     const actualFrameNumber = frameMap[i];
     
-    img.onload = () => {
+        img.onload = async () => {
+      // Force decode the image so it's ready for the GPU immediately
+      if (img.decode) {
+        try {
+          await img.decode();
+        } catch(e) { console.log(e) }
+      }
+      
       loadedCount++;
       const progress = Math.round((loadedCount / frameCount) * 100);
       
@@ -88,25 +107,17 @@ function preloadImages() {
 function render(frameIndex) {
   frameIndex = Math.max(0, Math.min(Math.floor(frameIndex), frameCount - 1));
   
-  // Skip if same frame
-  if (frameIndex === animationState.lastRenderedFrame) {
-    return;
-  }
+  if (frameIndex === animationState.lastRenderedFrame) return;
   
   const img = animationState.images[frameIndex];
+  if (!img || !img.complete || img.naturalWidth === 0) return;
   
-  if (!img || !img.complete || img.naturalWidth === 0) {
-    return;
-  }
+  const rect = cachedCanvasRect; 
   
-  const rect = canvas.getBoundingClientRect();
-  
-  // Clear and prepare canvas
-  ctx.clearRect(0, 0, rect.width, rect.height);
+  // REMOVED clearRect, fillRect is enough and much faster
   ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, rect.width, rect.height);
   
-  // Calculate cover sizing
   const canvasAspect = rect.width / rect.height;
   const imgAspect = img.naturalWidth / img.naturalHeight;
   
@@ -124,13 +135,11 @@ function render(frameIndex) {
     drawY = 0;
   }
   
-  // Draw image
-  ctx.globalAlpha = 1;
-  ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+  // | 0 converts decimals to integers for faster rendering
+  ctx.drawImage(img, drawX | 0, drawY | 0, drawWidth | 0, drawHeight | 0);
   
   animationState.lastRenderedFrame = frameIndex;
 }
-
 // Smooth animation loop with lerp
 let animationFrameId = null;
 
@@ -174,31 +183,22 @@ function handleScroll() {
     return;
   }
   
-  const homeSection = document.getElementById('home');
-  if (!homeSection) return;
-  
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const homeHeight = homeSection.offsetHeight;
   
-  // Calculate scroll fraction with boundaries
-  let rawFraction = scrollTop / homeHeight;
+  // USE CACHED HEIGHT HERE
+  if (!cachedHomeHeight) return; 
+  
+  let rawFraction = scrollTop / cachedHomeHeight;
   rawFraction = Math.max(0, Math.min(rawFraction, 1));
   
-  // Apply cinematic easing
   const easedFraction = easings.easeOutQuart(rawFraction);
-  
-  // Calculate target frame (smooth interpolation will handle the rest)
   animationState.targetFrame = easedFraction * (frameCount - 1);
   
-  // Handle text animations with staggered timing
   handleTextAnimations(rawFraction, scrollTop);
-  
-  // Handle navbar visibility
   handleNavbarVisibility(rawFraction, scrollTop);
   
   lastScrollTop = scrollTop;
   
-  // Detect scroll end for performance
   scrollTimeout = setTimeout(() => {
     animationState.currentFrame = animationState.targetFrame;
   }, 100);
@@ -225,50 +225,49 @@ function handleTextAnimations(scrollFraction, scrollPos) {
   
   if (!intro || !moti || !home) return;
   
-  // Use transform instead of multiple style changes for better performance
-  requestAnimationFrame(() => {
-    // Intro text - appears early with smooth fade
-    if (scrollFraction > 0.15 && scrollPos > 80) {
-      intro.classList.add('active');
-      const introProgress = Math.min((scrollFraction - 0.15) / 0.15, 1);
-      const opacity = easings.easeOutCubic(introProgress);
-      intro.style.cssText = `opacity: ${opacity}; transform: translateY(${(1 - opacity) * 30}px);`;
-    } else {
-      intro.classList.remove('active');
-      intro.style.cssText = 'opacity: 0; transform: translateY(30px);';
-    }
-    
-    // Moti text - appears after intro with delay
-    if (scrollFraction > 0.35 && scrollPos > 80) {
-      moti.classList.add('active');
-      const motiProgress = Math.min((scrollFraction - 0.35) / 0.15, 1);
-      const opacity = easings.easeOutCubic(motiProgress);
-      moti.style.cssText = `opacity: ${opacity}; transform: translateY(${(1 - opacity) * 30}px);`;
-    } else {
-      moti.classList.remove('active');
-      moti.style.cssText = 'opacity: 0; transform: translateY(30px);';
-    }
-    
-    // Feature box - appears last
-    if (scrollFraction > 0.60) {
-      home.classList.add('active');
-      const homeProgress = Math.min((scrollFraction - 0.60) / 0.15, 1);
-      const opacity = easings.easeOutCubic(homeProgress);
-      home.style.cssText = `opacity: ${opacity}; transform: translateX(-50%) translateY(${(1 - opacity) * 20}px);`;
-    } else {
-      home.classList.remove('active');
-      home.style.cssText = 'opacity: 0; transform: translateX(-50%) translateY(20px);';
-    }
-    
-    // Elegant fade out near end
-    if (scrollFraction > 0.88) {
-      const fadeOut = Math.min((scrollFraction - 0.88) / 0.08, 1);
-      const opacity = Math.max(0, 1 - easings.easeInOutCubic(fadeOut));
-      intro.style.opacity = opacity;
-      moti.style.opacity = opacity;
-      home.style.opacity = opacity;
-    }
-  });
+  // No requestAnimationFrame here since handleScroll is already throttled
+  
+  // Intro text
+  if (scrollFraction > 0.15 && scrollPos > 80) {
+    const introProgress = Math.min((scrollFraction - 0.15) / 0.15, 1);
+    const opacity = easings.easeOutCubic(introProgress);
+    intro.style.opacity = opacity;
+    intro.style.transform = `translateY(${(1 - opacity) * 30}px)`;
+  } else {
+    intro.style.opacity = 0;
+    intro.style.transform = 'translateY(30px)';
+  }
+  
+  // Moti text
+  if (scrollFraction > 0.35 && scrollPos > 80) {
+    const motiProgress = Math.min((scrollFraction - 0.35) / 0.15, 1);
+    const opacity = easings.easeOutCubic(motiProgress);
+    moti.style.opacity = opacity;
+    moti.style.transform = `translateY(${(1 - opacity) * 30}px)`;
+  } else {
+    moti.style.opacity = 0;
+    moti.style.transform = 'translateY(30px)';
+  }
+  
+  // Feature box
+  if (scrollFraction > 0.60) {
+    const homeProgress = Math.min((scrollFraction - 0.60) / 0.15, 1);
+    const opacity = easings.easeOutCubic(homeProgress);
+    home.style.opacity = opacity;
+    home.style.transform = `translate(-50%, ${(1 - opacity) * 20}px)`;
+  } else {
+    home.style.opacity = 0;
+    home.style.transform = 'translate(-50%, 20px)';
+  }
+  
+  // Elegant fade out near end
+  if (scrollFraction > 0.88) {
+    const fadeOut = Math.min((scrollFraction - 0.88) / 0.08, 1);
+    const opacity = Math.max(0, 1 - easings.easeInOutCubic(fadeOut));
+    intro.style.opacity = opacity;
+    moti.style.opacity = opacity;
+    home.style.opacity = opacity;
+  }
 }
 
 // Throttled scroll listener - OPTIMIZED
