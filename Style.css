@@ -918,6 +918,20 @@ html {
 }
 
 
+/* Critical for removing lag during text animations */
+#intro, #moti, #Home {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Ensure the canvas is optimized */
+#heroCanvas {
+  display: block;
+  image-rendering: optimizeSpeed;
+  image-rendering: -webkit-optimize-contrast;
+}
 
 /* RESPONSIVE - Premium Breakpoints */
 
