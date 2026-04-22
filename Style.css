@@ -492,9 +492,9 @@ position:relative;
 padding:0 20px;
 }
 
-.facil h3{
+#about h3{
 position:absolute;
-top:-60px;
+/* top:-60px; */
 left:0;
 font-size:36px;
 color:#1a1a1a;
@@ -515,6 +515,7 @@ max-width:320px;
 flex-shrink:0;
 border:1px solid rgba(0,0,0,0.04);
 position:relative;
+cursor: pointer;
 }
 
 .equi-card::before{
