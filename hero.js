@@ -12,17 +12,39 @@ let animationState = {
   isReady: false,
   lastScrollTime: 0,
   animationDelay: 300,
-  smoothness: 0.12, // Optimized for performance
+  smoothness: 0.10, // Optimized for performance
   lastRenderedFrame: -1
 };
 
-const frameCount = 58;
+// const frameCount = 50;
 
 // Frame mapping
+// const frameMap = [];
+// for (let i = 0; i <= 47; i++) {
+//   frameMap.push(i);
+// }
+// frameMap.push(57);
+
+// Replace your frameMap block with this:
 const frameMap = [];
-for (let i = 0; i <= 57; i++) {
+
+// Frames 0–30: normal speed
+for (let i = 0; i <= 30; i++) {
   frameMap.push(i);
 }
+
+// Frames 31–48: 2.5× slower (each frame appears ~2-3 times)
+for (let i = 31; i <= 48; i++) {
+  frameMap.push(i);
+  frameMap.push(i);       // duplicate
+  if (i % 3 === 0) frameMap.push(i); // every 3rd gets a triple
+}
+
+// Frames 49: normal end
+frameMap.push(49);
+
+// IMPORTANT: frameCount must match frameMap length now
+const frameCount = frameMap.length; // ~97 entries, 50 unique frames
 
 // Lerp (Linear Interpolation) for smooth frame transitions
 function lerp(start, end, factor) {
