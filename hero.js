@@ -436,330 +436,741 @@
 // }
 
 
-const canvas = document.getElementById('heroCanvas');
-let cachedCanvasRect = { width: 0, height: 0 };
-let cachedHomeHeight = 0;
-const ctx = canvas.getContext('2d', { alpha: false }); 
+// const canvas = document.getElementById('heroCanvas');
+// let cachedCanvasRect = { width: 0, height: 0 };
+// let cachedHomeHeight = 0;
+// const ctx = canvas.getContext('2d', { alpha: false }); 
 
-// Cache for drawing dimensions to avoid calculating every frame
-let drawDims = { x: 0, y: 0, w: 0, h: 0 };
+// // Cache for drawing dimensions to avoid calculating every frame
+// let drawDims = { x: 0, y: 0, w: 0, h: 0 };
 
-// State to track DOM updates (Dirty-checking)
-let lastTextState = {
-  introOpacity: -1,
-  motiOpacity: -1,
-  homeOpacity: -1
-};
+// // State to track DOM updates (Dirty-checking)
+// let lastTextState = {
+//   introOpacity: -1,
+//   motiOpacity: -1,
+//   homeOpacity: -1
+// };
 
-let animationState = {
-  images: [], // Now stores ImageBitmaps (GPU ready)
-  imagesLoaded: 0,
-  currentFrame: 0,
-  targetFrame: 0,
-  isReady: false,
-  lastScrollTime: 0,
-  animationDelay: 300,
-  smoothness: 0.10, 
-  lastRenderedFrame: -1
-};
+// let animationState = {
+//   images: [], // Now stores ImageBitmaps (GPU ready)
+//   imagesLoaded: 0,
+//   currentFrame: 0,
+//   targetFrame: 0,
+//   isReady: false,
+//   lastScrollTime: 0,
+//   animationDelay: 300,
+//   smoothness: 0.10, 
+//   lastRenderedFrame: -1
+// };
 
-const frameMap = [];
-for (let i = 0; i <= 30; i++) frameMap.push(i);
-for (let i = 31; i <= 48; i++) {
-  frameMap.push(i);
-  frameMap.push(i);
-  if (i % 3 === 0) frameMap.push(i);
-}
-frameMap.push(49);
-const frameCount = frameMap.length;
+// const frameMap = [];
+// for (let i = 0; i <= 30; i++) frameMap.push(i);
+// for (let i = 31; i <= 48; i++) {
+//   frameMap.push(i);
+//   frameMap.push(i);
+//   if (i % 3 === 0) frameMap.push(i);
+// }
+// frameMap.push(49);
+// const frameCount = frameMap.length;
 
-function lerp(start, end, factor) {
-  return start + (end - start) * factor;
-}
+// function lerp(start, end, factor) {
+//   return start + (end - start) * factor;
+// }
 
-const easings = {
-  easeOutCubic: t => 1 - Math.pow(1 - t, 3),
-  easeInOutCubic: t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
-  easeOutQuart: t => 1 - Math.pow(1 - t, 4),
-  easeOutExpo: t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t)
-};
+// const easings = {
+//   easeOutCubic: t => 1 - Math.pow(1 - t, 3),
+//   easeInOutCubic: t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+//   easeOutQuart: t => 1 - Math.pow(1 - t, 4),
+//   easeOutExpo: t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t)
+// };
 
-function updateDrawDimensions(img) {
-  const canvasAspect = cachedCanvasRect.width / cachedCanvasRect.height;
-  const imgAspect = img.width / img.height;
+// function updateDrawDimensions(img) {
+//   const canvasAspect = cachedCanvasRect.width / cachedCanvasRect.height;
+//   const imgAspect = img.width / img.height;
   
-  if (canvasAspect > imgAspect) {
-    drawDims.w = cachedCanvasRect.width;
-    drawDims.h = cachedCanvasRect.width / imgAspect;
-    drawDims.x = 0;
-    drawDims.y = (cachedCanvasRect.height - drawDims.h) / 2;
-  } else {
-    drawDims.h = cachedCanvasRect.height;
-    drawDims.w = cachedCanvasRect.height * imgAspect;
-    drawDims.x = (cachedCanvasRect.width - drawDims.w) / 2;
-    drawDims.y = 0;
-  }
-}
+//   if (canvasAspect > imgAspect) {
+//     drawDims.w = cachedCanvasRect.width;
+//     drawDims.h = cachedCanvasRect.width / imgAspect;
+//     drawDims.x = 0;
+//     drawDims.y = (cachedCanvasRect.height - drawDims.h) / 2;
+//   } else {
+//     drawDims.h = cachedCanvasRect.height;
+//     drawDims.w = cachedCanvasRect.height * imgAspect;
+//     drawDims.x = (cachedCanvasRect.width - drawDims.w) / 2;
+//     drawDims.y = 0;
+//   }
+// }
 
-function setCanvasSize() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2); 
-  const rect = canvas.getBoundingClientRect();
+// function setCanvasSize() {
+//   const dpr = Math.min(window.devicePixelRatio || 1, 2); 
+//   const rect = canvas.getBoundingClientRect();
   
-  cachedCanvasRect.width = rect.width;
-  cachedCanvasRect.height = rect.height;
+//   cachedCanvasRect.width = rect.width;
+//   cachedCanvasRect.height = rect.height;
   
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
+//   canvas.width = rect.width * dpr;
+//   canvas.height = rect.height * dpr;
+//   ctx.scale(dpr, dpr);
   
-  canvas.style.width = rect.width + 'px';
-  canvas.style.height = rect.height + 'px';
+//   canvas.style.width = rect.width + 'px';
+//   canvas.style.height = rect.height + 'px';
 
-  const homeSection = document.getElementById('home');
-  if (homeSection) {
-    cachedHomeHeight = homeSection.offsetHeight;
-  }
-}
+//   const homeSection = document.getElementById('home');
+//   if (homeSection) {
+//     cachedHomeHeight = homeSection.offsetHeight;
+//   }
+// }
 
-// Preload images using ImageBitmap for maximum GPU performance
-async function preloadImages() {
-  console.log('🎬 Loading cinematic sequence...');
+// // Preload images using ImageBitmap for maximum GPU performance
+// async function preloadImages() {
+//   console.log('🎬 Loading cinematic sequence...');
   
-  const loadPromises = [];
+//   const loadPromises = [];
   
-  for (let i = 0; i < frameCount; i++) {
-    const actualFrameNumber = frameMap[i];
-    const imgUrl = `Img/hero2/${actualFrameNumber}.webp`;
+//   for (let i = 0; i < frameCount; i++) {
+//     const actualFrameNumber = frameMap[i];
+//     const imgUrl = `Img/hero2/${actualFrameNumber}.webp`;
     
-    const promise = fetch(imgUrl)
-      .then(res => res.blob())
-      .then(blob => createImageBitmap(blob)) // Decodes off-main-thread
-      .then(bitmap => {
-        animationState.images[i] = bitmap;
-        animationState.imagesLoaded++;
-        return bitmap;
-      })
-      .catch(e => console.error(`❌ Failed: ${imgUrl}`, e));
+//     const promise = fetch(imgUrl)
+//       .then(res => res.blob())
+//       .then(blob => createImageBitmap(blob)) // Decodes off-main-thread
+//       .then(bitmap => {
+//         animationState.images[i] = bitmap;
+//         animationState.imagesLoaded++;
+//         return bitmap;
+//       })
+//       .catch(e => console.error(`❌ Failed: ${imgUrl}`, e));
     
-    loadPromises.push(promise);
-  }
+//     loadPromises.push(promise);
+//   }
   
-  await Promise.all(loadPromises);
+//   await Promise.all(loadPromises);
   
-  console.log('✨ All frames GPU-ready!');
-  animationState.isReady = true;
+//   console.log('✨ All frames GPU-ready!');
+//   animationState.isReady = true;
   
-  // Calculate dimensions once using the first bitmap
-  if (animationState.images[0]) {
-    updateDrawDimensions(animationState.images[0]);
-  }
+//   // Calculate dimensions once using the first bitmap
+//   if (animationState.images[0]) {
+//     updateDrawDimensions(animationState.images[0]);
+//   }
   
-  render(0);
-  startSmoothAnimation();
-}
+//   render(0);
+//   startSmoothAnimation();
+// }
 
-function render(frameIndex) {
-  frameIndex = Math.max(0, Math.min(Math.floor(frameIndex), frameCount - 1));
-  if (frameIndex === animationState.lastRenderedFrame) return;
+// function render(frameIndex) {
+//   frameIndex = Math.max(0, Math.min(Math.floor(frameIndex), frameCount - 1));
+//   if (frameIndex === animationState.lastRenderedFrame) return;
   
-  const img = animationState.images[frameIndex];
-  if (!img) return;
+//   const img = animationState.images[frameIndex];
+//   if (!img) return;
   
-  ctx.fillStyle = '#000000';
-  ctx.fillRect(0, 0, cachedCanvasRect.width, cachedCanvasRect.height);
+//   ctx.fillStyle = '#000000';
+//   ctx.fillRect(0, 0, cachedCanvasRect.width, cachedCanvasRect.height);
   
-  // Using cached drawDims instead of calculating every frame
-  ctx.drawImage(img, drawDims.x | 0, drawDims.y | 0, drawDims.w | 0, drawDims.h | 0);
+//   // Using cached drawDims instead of calculating every frame
+//   ctx.drawImage(img, drawDims.x | 0, drawDims.y | 0, drawDims.w | 0, drawDims.h | 0);
   
-  animationState.lastRenderedFrame = frameIndex;
-}
+//   animationState.lastRenderedFrame = frameIndex;
+// }
 
-function startSmoothAnimation() {
-  function animate() {
-    if (!animationState.isReady) return;
+// function startSmoothAnimation() {
+//   function animate() {
+//     if (!animationState.isReady) return;
     
-    const diff = Math.abs(animationState.targetFrame - animationState.currentFrame);
-    if (diff > 0.01) {
-      animationState.currentFrame = lerp(
-        animationState.currentFrame,
-        animationState.targetFrame,
-        animationState.smoothness
-      );
-      render(animationState.currentFrame);
+//     const diff = Math.abs(animationState.targetFrame - animationState.currentFrame);
+//     if (diff > 0.01) {
+//       animationState.currentFrame = lerp(
+//         animationState.currentFrame,
+//         animationState.targetFrame,
+//         animationState.smoothness
+//       );
+//       render(animationState.currentFrame);
+//     }
+//     requestAnimationFrame(animate);
+//   }
+//   animate();
+// }
+
+// function handleScroll() {
+//   if (!animationState.isReady) return;
+  
+//   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+//   if (!cachedHomeHeight) return; 
+  
+//   let rawFraction = Math.max(0, Math.min(scrollTop / cachedHomeHeight, 1));
+//   const easedFraction = easings.easeOutQuart(rawFraction);
+//   animationState.targetFrame = easedFraction * (frameCount - 1);
+  
+//   handleTextAnimations(rawFraction, scrollTop);
+//   handleNavbarVisibility(rawFraction, scrollTop);
+// }
+
+// function handleNavbarVisibility(scrollFraction, scrollPos) {
+//   const header = document.querySelector('.header');
+//   if (!header) return;
+//   if (scrollFraction < 0.90) {
+//     header.classList.add('hidden');
+//   } else {
+//     header.classList.remove('hidden');
+//   }
+// }
+
+// function handleTextAnimations(scrollFraction, scrollPos) {
+//   const intro = document.getElementById('intro');
+//   const moti = document.getElementById('moti');
+//   const home = document.getElementById('Home');
+//   if (!intro || !moti || !home) return;
+  
+//   // Calculate Intros
+//   let introOpacity = 0;
+//   let introY = 30;
+//   if (scrollFraction > 0.15 && scrollPos > 80) {
+//     const progress = Math.min((scrollFraction - 0.15) / 0.15, 1);
+//     introOpacity = easings.easeOutCubic(progress);
+//     introY = (1 - introOpacity) * 30;
+//   }
+
+//   // Calculate Moti
+//   let motiOpacity = 0;
+//   let motiY = 30;
+//   if (scrollFraction > 0.35 && scrollPos > 80) {
+//     const progress = Math.min((scrollFraction - 0.35) / 0.15, 1);
+//     motiOpacity = easings.easeOutCubic(progress);
+//     motiY = (1 - motiOpacity) * 30;
+//   }
+
+//   // Calculate Home
+//   let homeOpacity = 0;
+//   let homeY = 20;
+//   if (scrollFraction > 0.60) {
+//     const progress = Math.min((scrollFraction - 0.60) / 0.15, 1);
+//     homeOpacity = easings.easeOutCubic(progress);
+//     homeY = (1 - homeOpacity) * 20;
+//   }
+
+//   // Global Fade Out
+//   if (scrollFraction > 0.88) {
+//     const fadeOut = Math.min((scrollFraction - 0.88) / 0.08, 1);
+//     const globalOpacity = Math.max(0, 1 - easings.easeInOutCubic(fadeOut));
+//     introOpacity = Math.min(introOpacity, globalOpacity);
+//     motiOpacity = Math.min(motiOpacity, globalOpacity);
+//     homeOpacity = Math.min(homeOpacity, globalOpacity);
+//   }
+
+//   // --- DIRTY CHECKING: Only update DOM if value changed significantly ---
+//   if (Math.abs(lastTextState.introOpacity - introOpacity) > 0.005) {
+//     intro.style.opacity = introOpacity;
+//     intro.style.transform = `translateY(${introY}px)`;
+//     lastTextState.introOpacity = introOpacity;
+//   }
+
+//   if (Math.abs(lastTextState.motiOpacity - motiOpacity) > 0.005) {
+//     moti.style.opacity = motiOpacity;
+//     moti.style.transform = `translateY(${motiY}px)`;
+//     lastTextState.motiOpacity = motiOpacity;
+//   }
+
+//   if (Math.abs(lastTextState.homeOpacity - homeOpacity) > 0.005) {
+//     home.style.opacity = homeOpacity;
+//     home.style.transform = `translate(-50%, ${homeY}px)`;
+//     lastTextState.homeOpacity = homeOpacity;
+//   }
+// }
+
+// // Throttled scroll listener
+// window.addEventListener('scroll', () => {
+//   requestAnimationFrame(handleScroll);
+// }, { passive: true });
+
+// window.addEventListener('resize', () => {
+//   setCanvasSize();
+//   if (animationState.images[0]) updateDrawDimensions(animationState.images[0]);
+//   animationState.lastRenderedFrame = -1;
+//   render(animationState.currentFrame);
+// });
+
+// document.addEventListener('visibilitychange', () => {
+//   if (!document.hidden && animationState.isReady) {
+//     animationState.lastRenderedFrame = -1;
+//     render(animationState.currentFrame);
+//   }
+// });
+
+// window.addEventListener('load', () => {
+//   animationState.lastScrollTime = Date.now();
+//   handleScroll();
+// });
+
+// setCanvasSize();
+// preloadImages();
+
+// // --- Reveal Elements Observer ---
+// const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+// const revealObserver = new IntersectionObserver((entries) => {
+//   entries.forEach(entry => {
+//     if (entry.isIntersecting) {
+//       entry.target.classList.add('active');
+//     }
+//   });
+// }, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
+
+// revealElements.forEach(element => revealObserver.observe(element));
+
+// // --- About Slider ---
+// const facilContainer = document.querySelector('.facil');
+// const cards = document.querySelectorAll('.equi-card');
+// const dots = document.querySelectorAll('.dot');
+// const leftArrow = document.querySelector('.scroll-arrow.left');
+// const rightArrow = document.querySelector('.scroll-arrow.right');
+
+// if (facilContainer && cards.length > 0) {
+//   let currentSlide = 0;
+//   let isAnimating = false;
+//   const cardWidth = 352; 
+//   const visibleCards = Math.floor(window.innerWidth / cardWidth);
+//   const totalSlides = Math.max(cards.length - visibleCards + 1, 1);
+
+//   function updateSlider(smooth = true) {
+//     if (isAnimating && smooth) return;
+//     isAnimating = true;
+//     const offset = -currentSlide * cardWidth;
+//     facilContainer.style.transition = smooth ? 'transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+//     facilContainer.style.transform = `translateX(${offset}px)`;
+//     if (dots) {
+//       dots.forEach((dot, index) => dot.classList.toggle('active', index === currentSlide));
+//     }
+//     setTimeout(() => { isAnimating = false; }, smooth ? 700 : 0);
+//   }
+
+//   function scrollSlider(direction) {
+//     if (isAnimating) return;
+//     currentSlide += direction;
+//     if (currentSlide < 0) currentSlide = 0;
+//     else if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+//     updateSlider();
+//   }
+
+//   if (leftArrow) leftArrow.addEventListener('click', () => scrollSlider(-1));
+//   if (rightArrow) rightArrow.addEventListener('click', () => scrollSlider(1));
+//   if (dots) {
+//     dots.forEach((dot, index) => {
+//       dot.addEventListener('click', () => {
+//         currentSlide = index;
+//         updateSlider();
+//       });
+//     });
+//   }
+//   updateSlider(false);
+// }
+// ===============================
+// HERO SEQUENCE - OPTIMIZED
+// ===============================
+(() => {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d', { alpha: false });
+
+  // ---------- Cached layout ----------
+  let cachedCanvasRect = { width: 1, height: 1 };
+  let cachedHomeHeight = 1;
+  let dpr = 1;
+
+  // ---------- Animation state ----------
+  const animationState = {
+    images: [],
+    imagesLoaded: 0,
+    currentFrame: 0,
+    targetFrame: 0,
+    isReady: false,
+    lastRenderedFrame: -1,
+    smoothness: 0.22, // higher = tighter scroll sync, less laggy feel
+  };
+
+  // ---------- Frame mapping ----------
+  // Keep your cinematic pacing map (0..49 with weighted repeats)
+  const frameMap = [];
+  for (let i = 0; i <= 30; i++) frameMap.push(i);
+  for (let i = 31; i <= 48; i++) {
+    frameMap.push(i);
+    frameMap.push(i);
+    if (i % 3 === 0) frameMap.push(i);
+  }
+  frameMap.push(49);
+
+  const frameCount = frameMap.length;
+
+  // ---------- Easing ----------
+  const easings = {
+    easeOutCubic: t => 1 - Math.pow(1 - t, 3),
+    easeInOutCubic: t => (t < 0.5
+      ? 4 * t * t * t
+      : 1 - Math.pow(-2 * t + 2, 3) / 2),
+    easeOutQuart: t => 1 - Math.pow(1 - t, 4)
+  };
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  // ---------- Draw cache per frame ----------
+  const drawCache = new Map(); // key: frameIndex -> {x,y,w,h}
+
+  function computeDrawDimsForFrame(img) {
+    const cw = cachedCanvasRect.width;
+    const ch = cachedCanvasRect.height;
+
+    const canvasAspect = cw / ch;
+    const imgAspect = img.naturalWidth / img.naturalHeight;
+
+    let w, h, x, y;
+    if (canvasAspect > imgAspect) {
+      w = cw;
+      h = cw / imgAspect;
+      x = 0;
+      y = (ch - h) / 2;
+    } else {
+      h = ch;
+      w = ch * imgAspect;
+      x = (cw - w) / 2;
+      y = 0;
     }
-    requestAnimationFrame(animate);
-  }
-  animate();
-}
 
-function handleScroll() {
-  if (!animationState.isReady) return;
-  
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  if (!cachedHomeHeight) return; 
-  
-  let rawFraction = Math.max(0, Math.min(scrollTop / cachedHomeHeight, 1));
-  const easedFraction = easings.easeOutQuart(rawFraction);
-  animationState.targetFrame = easedFraction * (frameCount - 1);
-  
-  handleTextAnimations(rawFraction, scrollTop);
-  handleNavbarVisibility(rawFraction, scrollTop);
-}
-
-function handleNavbarVisibility(scrollFraction, scrollPos) {
-  const header = document.querySelector('.header');
-  if (!header) return;
-  if (scrollFraction < 0.90) {
-    header.classList.add('hidden');
-  } else {
-    header.classList.remove('hidden');
-  }
-}
-
-function handleTextAnimations(scrollFraction, scrollPos) {
-  const intro = document.getElementById('intro');
-  const moti = document.getElementById('moti');
-  const home = document.getElementById('Home');
-  if (!intro || !moti || !home) return;
-  
-  // Calculate Intros
-  let introOpacity = 0;
-  let introY = 30;
-  if (scrollFraction > 0.15 && scrollPos > 80) {
-    const progress = Math.min((scrollFraction - 0.15) / 0.15, 1);
-    introOpacity = easings.easeOutCubic(progress);
-    introY = (1 - introOpacity) * 30;
+    return {
+      x: x | 0,
+      y: y | 0,
+      w: w | 0,
+      h: h | 0
+    };
   }
 
-  // Calculate Moti
-  let motiOpacity = 0;
-  let motiY = 30;
-  if (scrollFraction > 0.35 && scrollPos > 80) {
-    const progress = Math.min((scrollFraction - 0.35) / 0.15, 1);
-    motiOpacity = easings.easeOutCubic(progress);
-    motiY = (1 - motiOpacity) * 30;
-  }
+  // ---------- Canvas sizing ----------
+  function setCanvasSize() {
+    const rect = canvas.getBoundingClientRect();
 
-  // Calculate Home
-  let homeOpacity = 0;
-  let homeY = 20;
-  if (scrollFraction > 0.60) {
-    const progress = Math.min((scrollFraction - 0.60) / 0.15, 1);
-    homeOpacity = easings.easeOutCubic(progress);
-    homeY = (1 - homeOpacity) * 20;
-  }
+    cachedCanvasRect.width = Math.max(1, Math.round(rect.width));
+    cachedCanvasRect.height = Math.max(1, Math.round(rect.height));
 
-  // Global Fade Out
-  if (scrollFraction > 0.88) {
-    const fadeOut = Math.min((scrollFraction - 0.88) / 0.08, 1);
-    const globalOpacity = Math.max(0, 1 - easings.easeInOutCubic(fadeOut));
-    introOpacity = Math.min(introOpacity, globalOpacity);
-    motiOpacity = Math.min(motiOpacity, globalOpacity);
-    homeOpacity = Math.min(homeOpacity, globalOpacity);
-  }
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5); // capped for performance
 
-  // --- DIRTY CHECKING: Only update DOM if value changed significantly ---
-  if (Math.abs(lastTextState.introOpacity - introOpacity) > 0.005) {
-    intro.style.opacity = introOpacity;
-    intro.style.transform = `translateY(${introY}px)`;
-    lastTextState.introOpacity = introOpacity;
-  }
+    canvas.width = Math.round(cachedCanvasRect.width * dpr);
+    canvas.height = Math.round(cachedCanvasRect.height * dpr);
 
-  if (Math.abs(lastTextState.motiOpacity - motiOpacity) > 0.005) {
-    moti.style.opacity = motiOpacity;
-    moti.style.transform = `translateY(${motiY}px)`;
-    lastTextState.motiOpacity = motiOpacity;
-  }
+    canvas.style.width = `${cachedCanvasRect.width}px`;
+    canvas.style.height = `${cachedCanvasRect.height}px`;
 
-  if (Math.abs(lastTextState.homeOpacity - homeOpacity) > 0.005) {
-    home.style.opacity = homeOpacity;
-    home.style.transform = `translate(-50%, ${homeY}px)`;
-    lastTextState.homeOpacity = homeOpacity;
-  }
-}
+    // IMPORTANT: reset transform each resize (avoid cumulative scale bug)
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-// Throttled scroll listener
-window.addEventListener('scroll', () => {
-  requestAnimationFrame(handleScroll);
-}, { passive: true });
+    const homeSection = document.getElementById('home');
+    if (homeSection) {
+      cachedHomeHeight = Math.max(1, homeSection.offsetHeight);
+    }
 
-window.addEventListener('resize', () => {
-  setCanvasSize();
-  if (animationState.images[0]) updateDrawDimensions(animationState.images[0]);
-  animationState.lastRenderedFrame = -1;
-  render(animationState.currentFrame);
-});
-
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && animationState.isReady) {
+    drawCache.clear();
     animationState.lastRenderedFrame = -1;
-    render(animationState.currentFrame);
-  }
-});
-
-window.addEventListener('load', () => {
-  animationState.lastScrollTime = Date.now();
-  handleScroll();
-});
-
-setCanvasSize();
-preloadImages();
-
-// --- Reveal Elements Observer ---
-const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
-}, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
-
-revealElements.forEach(element => revealObserver.observe(element));
-
-// --- About Slider ---
-const facilContainer = document.querySelector('.facil');
-const cards = document.querySelectorAll('.equi-card');
-const dots = document.querySelectorAll('.dot');
-const leftArrow = document.querySelector('.scroll-arrow.left');
-const rightArrow = document.querySelector('.scroll-arrow.right');
-
-if (facilContainer && cards.length > 0) {
-  let currentSlide = 0;
-  let isAnimating = false;
-  const cardWidth = 352; 
-  const visibleCards = Math.floor(window.innerWidth / cardWidth);
-  const totalSlides = Math.max(cards.length - visibleCards + 1, 1);
-
-  function updateSlider(smooth = true) {
-    if (isAnimating && smooth) return;
-    isAnimating = true;
-    const offset = -currentSlide * cardWidth;
-    facilContainer.style.transition = smooth ? 'transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
-    facilContainer.style.transform = `translateX(${offset}px)`;
-    if (dots) {
-      dots.forEach((dot, index) => dot.classList.toggle('active', index === currentSlide));
-    }
-    setTimeout(() => { isAnimating = false; }, smooth ? 700 : 0);
   }
 
-  function scrollSlider(direction) {
-    if (isAnimating) return;
-    currentSlide += direction;
-    if (currentSlide < 0) currentSlide = 0;
-    else if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
-    updateSlider();
-  }
-
-  if (leftArrow) leftArrow.addEventListener('click', () => scrollSlider(-1));
-  if (rightArrow) rightArrow.addEventListener('click', () => scrollSlider(1));
-  if (dots) {
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        currentSlide = index;
-        updateSlider();
-      });
+  // ---------- Progressive image preload ----------
+  async function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
     });
   }
-  updateSlider(false);
-}
+
+  async function preloadImagesProgressive() {
+    console.log('🎬 Loading hero sequence...');
+
+    // 1) Load first chunk quickly so animation can start ASAP
+    const firstChunk = Math.min(12, frameCount);
+
+    for (let i = 0; i < firstChunk; i++) {
+      const actualFrame = frameMap[i];
+      try {
+        const img = await loadImage(`Img/hero2/${actualFrame}.webp`);
+        animationState.images[i] = img;
+        animationState.imagesLoaded++;
+      } catch (e) {
+        console.error(`❌ Failed to load Img/hero2/${actualFrame}.webp`, e);
+      }
+    }
+
+    if (animationState.images[0]) {
+      animationState.isReady = true;
+      render(0);
+      startSmoothAnimation();
+      console.log('✨ Initial hero frames ready');
+    }
+
+    // 2) Load the rest in background
+    const restPromises = [];
+    for (let i = firstChunk; i < frameCount; i++) {
+      const actualFrame = frameMap[i];
+      const p = loadImage(`Img/hero2/${actualFrame}.webp`)
+        .then(img => {
+          animationState.images[i] = img;
+          animationState.imagesLoaded++;
+        })
+        .catch(e => {
+          console.error(`❌ Failed to load Img/hero2/${actualFrame}.webp`, e);
+        });
+      restPromises.push(p);
+    }
+
+    await Promise.all(restPromises);
+    console.log('✅ All hero frames loaded');
+  }
+
+  // ---------- Render ----------
+  function render(frameIndex) {
+    frameIndex = clamp(Math.floor(frameIndex), 0, frameCount - 1);
+
+    if (frameIndex === animationState.lastRenderedFrame) return;
+
+    const img = animationState.images[frameIndex];
+    if (!img || !img.complete || img.naturalWidth === 0) return;
+
+    let dims = drawCache.get(frameIndex);
+    if (!dims) {
+      dims = computeDrawDimsForFrame(img);
+      drawCache.set(frameIndex, dims);
+    }
+
+    // Opaque clear (faster path than clearRect with alpha canvas)
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, cachedCanvasRect.width, cachedCanvasRect.height);
+
+    ctx.drawImage(img, dims.x, dims.y, dims.w, dims.h);
+    animationState.lastRenderedFrame = frameIndex;
+  }
+
+  // ---------- Smooth animation loop ----------
+  let rafId = null;
+
+  function startSmoothAnimation() {
+    if (rafId) cancelAnimationFrame(rafId);
+
+    function animate() {
+      if (!animationState.isReady) return;
+
+      const diff = Math.abs(animationState.targetFrame - animationState.currentFrame);
+      if (diff > 0.01) {
+        animationState.currentFrame = lerp(
+          animationState.currentFrame,
+          animationState.targetFrame,
+          animationState.smoothness
+        );
+        render(animationState.currentFrame);
+      }
+
+      rafId = requestAnimationFrame(animate);
+    }
+
+    rafId = requestAnimationFrame(animate);
+  }
+
+  // ---------- UI text/nav updates ----------
+  let lastTextState = {
+    introOpacity: -1,
+    motiOpacity: -1,
+    homeOpacity: -1
+  };
+
+  function handleNavbarVisibility(scrollFraction) {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    header.classList.toggle('hidden', scrollFraction < 0.9);
+  }
+
+  function handleTextAnimations(scrollFraction, scrollPos) {
+    const intro = document.getElementById('intro');
+    const moti = document.getElementById('moti');
+    const home = document.getElementById('Home');
+    if (!intro || !moti || !home) return;
+
+    let introOpacity = 0, introY = 30;
+    if (scrollFraction > 0.15 && scrollPos > 80) {
+      const p = Math.min((scrollFraction - 0.15) / 0.15, 1);
+      introOpacity = easings.easeOutCubic(p);
+      introY = (1 - introOpacity) * 30;
+    }
+
+    let motiOpacity = 0, motiY = 30;
+    if (scrollFraction > 0.35 && scrollPos > 80) {
+      const p = Math.min((scrollFraction - 0.35) / 0.15, 1);
+      motiOpacity = easings.easeOutCubic(p);
+      motiY = (1 - motiOpacity) * 30;
+    }
+
+    let homeOpacity = 0, homeY = 20;
+    if (scrollFraction > 0.60) {
+      const p = Math.min((scrollFraction - 0.60) / 0.15, 1);
+      homeOpacity = easings.easeOutCubic(p);
+      homeY = (1 - homeOpacity) * 20;
+    }
+
+    if (scrollFraction > 0.88) {
+      const fadeOut = Math.min((scrollFraction - 0.88) / 0.08, 1);
+      const globalOpacity = Math.max(0, 1 - easings.easeInOutCubic(fadeOut));
+      introOpacity = Math.min(introOpacity, globalOpacity);
+      motiOpacity = Math.min(motiOpacity, globalOpacity);
+      homeOpacity = Math.min(homeOpacity, globalOpacity);
+    }
+
+    if (Math.abs(lastTextState.introOpacity - introOpacity) > 0.005) {
+      intro.style.opacity = introOpacity;
+      intro.style.transform = `translateY(${introY}px)`;
+      lastTextState.introOpacity = introOpacity;
+    }
+
+    if (Math.abs(lastTextState.motiOpacity - motiOpacity) > 0.005) {
+      moti.style.opacity = motiOpacity;
+      moti.style.transform = `translateY(${motiY}px)`;
+      lastTextState.motiOpacity = motiOpacity;
+    }
+
+    if (Math.abs(lastTextState.homeOpacity - homeOpacity) > 0.005) {
+      // Keep Home centered like your previous version
+      home.style.opacity = homeOpacity;
+      home.style.transform = `translateX(-50%) translateY(${homeY}px)`;
+      lastTextState.homeOpacity = homeOpacity;
+    }
+  }
+
+  // ---------- Scroll handling ----------
+  function handleScroll() {
+    if (!animationState.isReady) return;
+
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if (!cachedHomeHeight) return;
+
+    const rawFraction = clamp(scrollTop / cachedHomeHeight, 0, 1);
+    const easedFraction = easings.easeOutQuart(rawFraction);
+
+    animationState.targetFrame = easedFraction * (frameCount - 1);
+
+    handleTextAnimations(rawFraction, scrollTop);
+    handleNavbarVisibility(rawFraction);
+  }
+
+  let scrollTicking = false;
+  window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      handleScroll();
+      scrollTicking = false;
+    });
+  }, { passive: true });
+
+  // ---------- Resize / visibility ----------
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      setCanvasSize();
+      render(animationState.currentFrame);
+    }, 120);
+  }, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && animationState.isReady) {
+      animationState.lastRenderedFrame = -1;
+      render(animationState.currentFrame);
+    }
+  });
+
+  // ---------- Init ----------
+  window.addEventListener('load', () => {
+    setCanvasSize();
+    preloadImagesProgressive();
+    handleScroll();
+  });
+
+  // ===============================
+  // Reveal Elements Observer
+  // ===============================
+  const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // ===============================
+  // ABOUT SECTION SLIDER
+  // ===============================
+  const facilContainer = document.querySelector('.facil');
+  const cards = document.querySelectorAll('.equi-card');
+  const dots = document.querySelectorAll('.dot');
+  const leftArrow = document.querySelector('.scroll-arrow.left');
+  const rightArrow = document.querySelector('.scroll-arrow.right');
+
+  if (facilContainer && cards.length > 0) {
+    let currentSlide = 0;
+    let isAnimating = false;
+    const cardWidth = 352;
+
+    function getVisibleCards() {
+      return Math.max(1, Math.floor(window.innerWidth / cardWidth));
+    }
+
+    function getTotalSlides() {
+      return Math.max(cards.length - getVisibleCards() + 1, 1);
+    }
+
+    function updateSlider(smooth = true) {
+      if (isAnimating && smooth) return;
+      isAnimating = true;
+
+      const totalSlides = getTotalSlides();
+      currentSlide = clamp(currentSlide, 0, totalSlides - 1);
+
+      const offset = -currentSlide * cardWidth;
+      facilContainer.style.transition = smooth
+        ? 'transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        : 'none';
+      facilContainer.style.transform = `translateX(${offset}px)`;
+
+      if (dots && dots.length) {
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentSlide);
+        });
+      }
+
+      setTimeout(() => { isAnimating = false; }, smooth ? 700 : 0);
+    }
+
+    function scrollSlider(direction) {
+      if (isAnimating) return;
+      currentSlide += direction;
+      updateSlider(true);
+    }
+
+    if (leftArrow) leftArrow.addEventListener('click', () => scrollSlider(-1));
+    if (rightArrow) rightArrow.addEventListener('click', () => scrollSlider(1));
+
+    if (dots && dots.length) {
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          currentSlide = index;
+          updateSlider(true);
+        });
+      });
+    }
+
+    updateSlider(false);
+
+    let sliderResizeTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(sliderResizeTimer);
+      sliderResizeTimer = setTimeout(() => updateSlider(false), 120);
+    }, { passive: true });
+  }
+})();
