@@ -986,6 +986,16 @@
     header.classList.toggle('hidden', scrollFraction < 0.9);
   }
 
+  // Promote text elements to their own compositor layers once
+  function initTextLayers() {
+    const intro = document.getElementById('intro');
+    const moti = document.getElementById('moti');
+    const home = document.getElementById('Home');
+    if (intro) { intro.style.willChange = 'opacity, transform'; intro.style.transform = 'translate3d(0,30px,0)'; intro.style.opacity = 0; }
+    if (moti)  { moti.style.willChange  = 'opacity, transform'; moti.style.transform  = 'translate3d(0,30px,0)'; moti.style.opacity  = 0; }
+    if (home)  { home.style.willChange  = 'opacity, transform'; home.style.transform  = 'translate3d(-50%,20px,0)'; home.style.opacity = 0; }
+  }
+
   function handleTextAnimations(scrollFraction, scrollPos) {
     const intro = document.getElementById('intro');
     const moti = document.getElementById('moti');
@@ -1023,20 +1033,19 @@
 
     if (Math.abs(lastTextState.introOpacity - introOpacity) > 0.005) {
       intro.style.opacity = introOpacity;
-      intro.style.transform = `translateY(${introY}px)`;
+      intro.style.transform = `translate3d(0,${introY}px,0)`;
       lastTextState.introOpacity = introOpacity;
     }
 
     if (Math.abs(lastTextState.motiOpacity - motiOpacity) > 0.005) {
       moti.style.opacity = motiOpacity;
-      moti.style.transform = `translateY(${motiY}px)`;
+      moti.style.transform = `translate3d(0,${motiY}px,0)`;
       lastTextState.motiOpacity = motiOpacity;
     }
 
     if (Math.abs(lastTextState.homeOpacity - homeOpacity) > 0.005) {
-      // Keep Home centered like your previous version
       home.style.opacity = homeOpacity;
-      home.style.transform = `translateX(-50%) translateY(${homeY}px)`;
+      home.style.transform = `translate3d(-50%,${homeY}px,0)`;
       lastTextState.homeOpacity = homeOpacity;
     }
   }
@@ -1087,6 +1096,7 @@
   // ---------- Init ----------
   window.addEventListener('load', () => {
     setCanvasSize();
+    initTextLayers();
     preloadImagesProgressive();
     handleScroll();
   });
